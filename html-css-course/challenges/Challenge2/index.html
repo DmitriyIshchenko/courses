@@ -4,32 +4,42 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
     <title>Shoes</title>
   </head>
   <body>
-    <acticle>
-      <h2>Converse Chuck Taylor All Star Low Top</h2>
+    <article class="product">
+      <h2 class="product-title">Converse Chuck Taylor All Star Low Top</h2>
 
       <img src="img/challenges.jpg" alt="shoes" width="250" height="250" />
-      <p><strong>$65.00</strong></p>
+      <p class="product-price"><strong>$65.00</strong></p>
 
-      <p>Free shipping</p>
+      <p class="product-shipping">Free shipping</p>
+      <p class="sale">sale</p>
 
       <p>
         Ready to dress up or down, these classic canvas Chucks are an everyday
         wardrobe staple.
       </p>
 
-      <a href="#">More information &rarr;</a>
+      <a class="more-info" href="#">More information &rarr;</a>
 
-      <h3>Product details</h3>
-      <ul>
+      <div class="colors-panel">
+        <div class="box black"></div>
+        <div class="box blue"></div>
+        <div class="box red"></div>
+        <div class="box yellow"></div>
+        <div class="box green"></div>
+        <div class="box brown"></div>
+      </div>
+
+      <h3 class="details-title">Product details</h3>
+      <ul class="details-list">
         <li>Lightweight, durable canvas sneaker</li>
         <li>Lightly padded footbed for added comfort</li>
         <li>Iconic Chuck Taylor ankle patch</li>
       </ul>
-
-      <button>Add to cart</button>
-    </acticle>
+      <button class="btn">Add to cart</button>
+    </article>
   </body>
 </html>
