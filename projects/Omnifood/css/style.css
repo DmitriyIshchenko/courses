@@ -66,11 +66,12 @@
 /* MOBILE */
 .btn-mobile-nav {
   cursor: pointer;
+  display: none;
+
+  z-index: 999;
 
   border: none;
   background: none;
-
-  display: none;
 }
 .icon-mobile-nav {
   height: 4.8rem;
