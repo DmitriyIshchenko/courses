@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Always include -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,6 +15,7 @@
     />
     <link rel="stylesheet" href="css/general.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/queries.css" />
     <title>Omnifood</title>
   </head>
   <body>
@@ -20,6 +23,7 @@
       <a href="#">
         <img src="img/omnifood-logo.png" alt="Omnifood logo" class="logo" />
       </a>
+
       <nav class="main-nav">
         <ul class="main-nav-list">
           <li><a class="main-nav-link" href="#">How it works</a></li>
@@ -29,7 +33,13 @@
           <li><a class="main-nav-link nav-cta" href="#">Try for free</a></li>
         </ul>
       </nav>
+
+      <button class="btn-mobile-nav">
+        <ion-icon class="icon-mobile-nav" name="menu-outline"></ion-icon>
+        <ion-icon class="icon-mobile-nav" name="close-outline"></ion-icon>
+      </button>
     </header>
+
     <main>
       <section class="section-hero">
         <div class="hero">
@@ -605,11 +615,23 @@
           </a>
 
           <ul class="social-links">
-            <li><a class="footer-link" href="#"><ion-icon class="social-icon" name="logo-instagram"></ion-icon></a></li>
-            <li><a class="footer-link" href="#"><ion-icon class="social-icon" name="logo-facebook"></ion-icon></a></li>
-            <li><a class="footer-link" href="#"><ion-icon  class="social-icon" name="logo-twitter"></ion-icon></a></li>
+            <li>
+              <a class="footer-link" href="#"
+                ><ion-icon class="social-icon" name="logo-instagram"></ion-icon
+              ></a>
+            </li>
+            <li>
+              <a class="footer-link" href="#"
+                ><ion-icon class="social-icon" name="logo-facebook"></ion-icon
+              ></a>
+            </li>
+            <li>
+              <a class="footer-link" href="#"
+                ><ion-icon class="social-icon" name="logo-twitter"></ion-icon
+              ></a>
+            </li>
           </ul>
-          
+
           <p class="copyright">
             Copyright &copy; 2027 by Omnifood, Inc. All rights reserved.
           </p>
@@ -618,10 +640,15 @@
         <div class="address-col">
           <p class="footer-heading">Contact us</p>
           <address class="contacts">
-            <p class="address">623 Harrison St., 2nd Floor, San Francisco, CA 94107</p>
+            <p class="address">
+              623 Harrison St., 2nd Floor, San Francisco, CA 94107
+            </p>
             <p>
-              <a class="footer-link" href="tel:415-201-6370">415-201-6370</a></p><br/>
-              <a class="footer-link" href="mailto:hello@omnifood.com">hello@omnifood.com</a>
+              <a class="footer-link" href="tel:415-201-6370">415-201-6370</a
+              ><br />
+              <a class="footer-link" href="mailto:hello@omnifood.com"
+                >hello@omnifood.com</a
+              >
             </p>
           </address>
         </div>
@@ -652,8 +679,8 @@
             <li><a class="footer-link" href="#">Recipe directory</a></li>
             <li><a class="footer-link" href="#">Help center</a></li>
             <li><a class="footer-link" href="#">Privacy & terms</a></li>
-          </ul></nav>
-
+          </ul>
+        </nav>
       </div>
     </footer>
 
@@ -665,5 +692,23 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
+
+    <script>
+      const header = document.querySelector(".header");
+      const btn = document.querySelector(".btn-mobile-nav");
+
+      let showNav = false;
+      btn.addEventListener("click", toggleNav);
+
+      function toggleNav() {
+        if (!showNav) {
+          header.classList.add("nav-open");
+          showNav = true;
+        } else {
+          header.classList.remove("nav-open");
+          showNav = false;
+        }
+      }
+    </script>
   </body>
 </html>
