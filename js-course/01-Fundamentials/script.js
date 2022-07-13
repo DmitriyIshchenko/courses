@@ -177,7 +177,7 @@ if (markBMI > johnBMI) {
     )}) is higher than Mark's (${markBMI.toFixed(1)})!`
   );
 }
-*/
+
 
 //conversion
 const inputYear = "1991";
@@ -197,3 +197,152 @@ console.log("23" * "2");
 let n = "1" + 1; // "11"
 n = n - 1; // 11 - 1 = 10
 console.log(n); //10
+
+
+console.log(Boolean(0));
+console.log(Boolean(undefined));
+console.log(Boolean("John"));
+console.log(Boolean({}));
+
+const money = 0;
+
+if (money) {
+  console.log("Don't spend it all");
+} else console.log("You should get a job!");
+
+let height = 0;
+if (height) {
+  console.log("Height is defined");
+} else console.log("height is undefined");
+
+
+const age = "18";
+// const age = 18;
+
+if (age === 18) console.log("You just became an adult (strict)");
+if (age == 18) console.log("You just became an adult (loose)");
+
+const favourite = Number(prompt("What is your favourite number?"));
+console.log(favourite);
+
+if (favourite === 23) {
+  console.log("cool! 23 is an amazing number");
+} else if (favourite === 7) {
+  console.log("7 is also cool");
+} else {
+  console.log("Number is not 23 or 7");
+}
+
+if (favourite !== 23) {
+  console.log("why not 23?");
+}
+
+
+const hasDriversLicense = true; //A
+const hasGoodVision = true; //B
+
+console.log(hasDriversLicense && hasGoodVision);
+console.log(hasDriversLicense || hasGoodVision);
+console.log(!hasDriversLicense);
+
+// if (hasDriversLicense && hasGoodVision) {
+//   console.log("Sarah is able to drive");
+// } else console.log("someone else should drive");
+
+const isTired = false; // C
+console.log(hasDriversLicense && hasGoodVision && isTired);
+
+if (hasDriversLicense && hasGoodVision && !isTired) {
+  console.log("Sarah is able to drive");
+} else console.log("someone else should drive");
+
+
+
+// //////////////////////////////////////////////////////
+// Challenge 2
+///////////////////////////////////////////////////////////
+
+// const avgDolphins = (96 + 108 + 89) / 3;
+// const avgKoalas = (88 + 91 + 110) / 3;
+
+//BONUS 1
+// const avgDolphins = (97 + 112 + 101) / 3;
+// const avgKoalas = (109 + 95 + 123) / 3;
+
+//BONUS 2
+const avgDolphins = (97 + 112 + 101) / 3;
+const avgKoalas = (109 + 95 + 106) / 3;
+
+console.log(avgDolphins, avgKoalas);
+
+if (avgDolphins > avgKoalas && avgDolphins >= 100) {
+  console.log("Dolphins win!");
+} else if (avgKoalas > avgDolphins && avgKoalas >= 100) {
+  console.log("Koalas win!");
+} else if (avgDolphins === avgKoalas && avgDolphins >= 100) {
+  console.log("Draw!");
+} else console.log("No team wins");
+
+
+const day = "friday";
+
+switch (day) {
+  case "monday":
+    console.log("Plan course structure");
+    console.log("Go to coding meetup");
+    break;
+  case "tuesday":
+    console.log("prepare video");
+    break;
+  case "wednesday":
+  case "thursday":
+    console.log("code");
+    break;
+  case "friday":
+    console.log("record");
+    break;
+  case "saturday":
+  case "sunday":
+    console.log("enjoy");
+    break;
+  default:
+    console.log("invalid");
+}
+
+if (day === "monday") {
+  console.log("Plan course structure");
+  console.log("Go to coding meetup");
+} else if (day === "tuesday") {
+  console.log("prepare video");
+} else if (day === "wednesday" || day === "thursday") {
+  console.log("code");
+} else if (day === "friday") {
+  console.log("record");
+} else if (day === "saturday" || day === "sunday") {
+  console.log("enjoy");
+} else console.log("invalid");
+
+
+const age = 23;
+
+// age >= 18 ? console.log("full age") : console.log("underage");
+
+const drink = age >= 18 ? "wine" : "water";
+console.log(drink);
+
+let drink2;
+
+if (age > 18) {
+  drink2 = "wine";
+} else drink2 = "water";
+
+console.log(drink2);
+
+console.log(`I like to drink ${age >= 18 ? "wine" : "water"}`);
+*/
+
+const bill = 275;
+const tip = bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
+console.log(
+  `The bill was ${bill}, the tip was ${tip}, and the total value ${bill + tip}`
+);
