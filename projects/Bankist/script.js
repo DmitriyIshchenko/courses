@@ -175,6 +175,23 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  const username = inputCloseUsername.value;
+  const pin = +inputClosePin.value;
+  if (currentAccount.username === username && currentAccount.pin === pin) {
+    const index = accounts.findIndex(acc => acc.username === username);
+    accounts.splice(index, 1);
+
+    // Log out
+    currentAccount = '';
+    labelWelcome.textContent = 'Log in to get started';
+    containerApp.style.opacity = 0;
+    window.scrollTo(0, 0);
+  }
+  inputClosePin.value = inputCloseUsername.value = '';
+});
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
