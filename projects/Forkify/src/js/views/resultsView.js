@@ -1,3 +1,4 @@
+import previewView from './previewView';
 import View from './View';
 
 class ResultsView extends View {
@@ -6,25 +7,7 @@ class ResultsView extends View {
   _successMessage;
 
   _generateMarkup() {
-    return this._data.map(this._generateMarkupPrewiew).join('');
-  }
-
-  _generateMarkupPrewiew(preview) {
-    const id = window.location.hash.slice(1);
-    const activeClass = id === preview.id ? 'preview__link--active' : '';
-    return `
-    <li class="preview">
-      <a class="preview__link  ${activeClass}" href="#${preview.id}">
-        <figure class="preview__fig">
-          <img src="${preview.image}" alt="${preview.title}" />
-        </figure>
-        <div class="preview__data">
-          <h4 class="preview__title">${preview.title}</h4>
-          <p class="preview__publisher">${preview.publisher}</p>
-        </div>
-      </a>
-    </li>
-    `;
+    return this._data.map(result => previewView.render(result, false)).join('');
   }
 }
 
