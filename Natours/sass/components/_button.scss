@@ -10,7 +10,7 @@
 
     transition: all 0.2s;
 
-    font-size: 1.6rem;
+    font-size: $default-font-size;
     text-transform: uppercase;
     text-decoration: none;
   }
@@ -60,5 +60,34 @@
 
     /* apply 0% styles before animation starts*/
     animation-fill-mode: backwards;
+  }
+}
+
+.btn-text {
+  &:link,
+  &:visited {
+    display: inline-block;
+    padding: 3px;
+
+    border-bottom: 1px solid $color-primary;
+    text-decoration: none;
+
+    transition: all 0.2s;
+
+    font-size: $default-font-size;
+    color: $color-primary;
+  }
+
+  &:hover {
+    box-shadow: 0 1rem 2rem rgba($color-black, 0.15);
+    background-color: $color-primary;
+    transform: translateY(-2px);
+
+    color: $color-white;
+  }
+
+  &:active {
+    box-shadow: 0 0.5rem 1rem rgba($color-black, 0.15);
+    transform: translate(0);
   }
 }
