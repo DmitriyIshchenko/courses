@@ -6,7 +6,7 @@
   width: 75%;
   box-shadow: 0 3rem 6rem rgba($color-black, 0.1);
   background-color: rgba($color-white, 0.6);
-  border-radius: 3px;
+  border-radius: $default-border-radius;
 
   transform: skewX(-12deg);
 
