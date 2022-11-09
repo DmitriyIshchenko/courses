@@ -1,0 +1,72 @@
+.story {
+  margin: 0 auto;
+  padding: 6rem;
+  padding-left: 9rem; // missing 3rem from transform
+
+  width: 75%;
+  box-shadow: 0 3rem 6rem rgba($color-black, 0.1);
+  background-color: rgba($color-white, 0.6);
+  border-radius: 3px;
+
+  transform: skewX(-12deg);
+
+  font-size: $default-font-size;
+
+  &__shape {
+    position: relative;
+    float: left;
+    width: 15rem;
+    height: 15rem;
+
+    // makes text float around, in order to work need to be floated, also need to have defined width and height
+    // <radius> at <x coord> <y coord>
+    -webkit-shape-outside: circle(50% at 50% 50%);
+    shape-outside: circle(50% at 50% 50%);
+
+    // circle itself
+    -webkit-clip-path: circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%);
+
+    transform: translateX(-3rem) skewX(12deg);
+  }
+
+  &__img {
+    height: 100%;
+    transform: translateX(-4rem) scale(1.4);
+
+    transition: all 0.5s;
+  }
+
+  &__text {
+    transform: skewX(12deg);
+  }
+
+  &__caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 20%);
+    opacity: 0;
+
+    transition: all 0.5s;
+
+    backface-visibility: hidden; // fix shacking
+
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $color-white;
+  }
+
+  &:hover &__caption {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  // blur and zoom out the image (scale back to original size)
+  &:hover &__img {
+    transform: translateX(-4rem) scale(1);
+    filter: blur(3px) brightness(80%);
+  }
+}
