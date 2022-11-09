@@ -1,4 +1,5 @@
 .btn {
+  &, // for <button> element
   &:link,
   &:visited {
     position: relative;
@@ -13,6 +14,12 @@
     font-size: $default-font-size;
     text-transform: uppercase;
     text-decoration: none;
+
+    // for the <button> element
+    border: none;
+    cursor: pointer;
+
+    font-family: inherit;
   }
 
   &:hover {
@@ -25,7 +32,9 @@
     }
   }
 
-  &:active {
+  &:active,
+  &:focus {
+    outline: none;
     box-shadow: 0 0.5rem 1rem rgba($color-black, 0.2);
     transform: translateY(-1px);
   }
