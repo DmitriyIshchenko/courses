@@ -17,9 +17,20 @@
 
     text-align: center; // center lines
     cursor: pointer;
+
+    // align button with the logo
+    @include respond(tab-port) {
+      top: 4rem;
+      right: 4rem;
+    }
+    @include respond(phone) {
+      top: 3rem;
+      right: 3rem;
+    }
   }
 
   &__background {
+    // like absolute, but doesn't move as we scroll the page
     position: fixed;
     // .5rem is the difference between the background and button
     top: 6.5rem;
@@ -34,12 +45,21 @@
     // custom easing function
     transition: all 0.8s cubic-bezier(0.83, 0, 0.17, 1);
 
-    // like absolute, but doesn't move as we scroll the page
-
     background-image: radial-gradient(
       $color-primary-light,
       $color-primary-dark
     );
+
+    // align button with the logo
+    @include respond(tab-port) {
+      top: 4.5rem;
+      right: 4.5rem;
+    }
+
+    @include respond(phone) {
+      top: 3.5rem;
+      right: 3.5rem;
+    }
   }
 
   &__nav {
@@ -114,7 +134,7 @@
   // FUNCTIONALITY
   // scale to fill the entire viewport
   &__checkbox:checked ~ &__background {
-    transform: scale(80);
+    transform: scale(120);
   }
 
   // show navigation when checkbox is checked

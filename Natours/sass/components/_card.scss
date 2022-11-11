@@ -189,4 +189,65 @@
     font-size: 6rem;
     font-weight: 100;
   }
+
+  // MEDIA QUERY
+  // a lot of rewriting, so there is a separate media query
+  @include respond(tab-port) {
+    // there is no longer back side, so there is no need to specify height, same with the sides
+    height: auto;
+    border-radius: $default-border-radius;
+    overflow: hidden;
+    background-color: $color-white;
+    box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+
+    &__side {
+      // back side comes after front side, so there is no need for absolute positioning
+      position: relative;
+      height: auto;
+
+      // remove border and shadow from the side and apply to the entire card
+      border-radius: 0;
+      box-shadow: none;
+
+      &--back {
+        // disable rotating
+        transform: rotateY(0);
+
+        // crop similar to card picture
+        -webkit-clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+        clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+      }
+    }
+
+    &:hover &__side--front {
+      transform: rotateY(0);
+    }
+
+    &__details {
+      padding: 1rem 3rem;
+    }
+
+    // BACK SIDE STYLING
+
+    &__cta {
+      position: relative;
+      top: 0;
+      left: 0;
+      transform: translate(0);
+
+      padding: 4rem;
+      padding-top: 6rem;
+      width: 100%;
+      text-align: center;
+    }
+
+    &__price-box {
+      margin-bottom: 3rem;
+    }
+
+    &__price-value {
+      font-size: 4rem;
+      font-weight: 300;
+    }
+  }
 }

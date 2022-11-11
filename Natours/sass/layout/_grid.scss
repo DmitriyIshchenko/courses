@@ -5,6 +5,21 @@
   // everything except last child
   &:not(:last-child) {
     margin-bottom: $gutter-vertical;
+
+    // decrease space between rows
+    @include respond(tab-port) {
+      margin-bottom: $gutter-vertical-small;
+    }
+  }
+
+  @include respond(tab-land) {
+    max-width: 105rem;
+  }
+
+  @include respond(tab-port) {
+    // max-width will occupy 100% of its available width, so it needs to be smaller
+    max-width: 55rem;
+    padding: 0 3rem;
   }
 
   @include clearfix;
@@ -15,9 +30,27 @@
 
     &:not(:last-child) {
       margin-right: $gutter-horizontal;
+
+      /* 
+      columns are on top of each other now, 
+      so we need to remove horizontal space between them and add vertical
+      */
+      @include respond(tab-port) {
+        margin-right: 0;
+        margin-bottom: $gutter-vertical-small;
+      }
+    }
+
+    @include respond(tab-port) {
+      // make sure to override width of columns
+      width: 100% !important;
     }
   }
 
+  /* 
+    the width of the long columns is the sum of short columns (1-of) and the gutters between them
+    uncomment GRID TEST in index.html to make sure
+  */
   .col-1-of-2 {
     width: calc((100% - #{$gutter-horizontal}) / 2);
   }
