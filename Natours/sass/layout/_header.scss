@@ -3,10 +3,6 @@
 
   height: 95vh;
 
-  /* crop  */
-  -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
-  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
-
   /* hero image */
   background-image: linear-gradient(
       to right bottom,
@@ -16,6 +12,20 @@
     url(../img/hero.jpg);
   background-size: cover;
   background-position: top;
+
+  /* crop  */
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+
+  // change angle
+  @include respond(tab-land) {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 90%);
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 90%);
+  }
+  @include respond(phone) {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 80vh, 0 90%);
+    clip-path: polygon(0 0, 100% 0, 100% 80vh, 0 90%);
+  }
 
   &__logo-box {
     position: absolute;

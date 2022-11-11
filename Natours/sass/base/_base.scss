@@ -8,10 +8,37 @@
 }
 
 html {
-  /* defines what 1rem is */
-  font-size: 62.5%;
+  /* defines what 1rem is (doesn't affect media queries)*/
+  font-size: 62.5%; // 1rem = 10px; 10px/16px = 62.5%;
+
+  @include respond(big-desktop) {
+    font-size: 75%; // 1rem = 12px; 12/16 = 75%
+  }
+  // width < 1200?
+  /* 
+    In case of conflicting declaration 
+    (e.g. screen size is 700px, which is less than both 1200 and 900),
+    the last one will be applied. That's why the breakpoint are written in order from biggest to lowest. 
+    In case of mobile-first approach, everything is the opposite way.
+  */
+  @include respond(tab-land) {
+    font-size: 56.25%; //1rem = 8px; 9/16 = 56.25%
+  }
+
+  // width < 900?
+  @include respond(tab-port) {
+    font-size: 50%; //1rem = 8px; 8/16 = 50%
+  }
+
+  // there is no need for phone query to set font-size to 50%,
+  // since the tab-port query will be already applied
 }
 
 body {
   box-sizing: border-box;
+  padding: 3rem;
+
+  @include respond(tab-land) {
+    padding: 0;
+  }
 }
