@@ -9,13 +9,31 @@
       rgba($color-primary-light, 0.8),
       rgba($color-primary-dark, 0.8)
     ),
-    url(../img/hero.jpg);
+    url(../img/hero-small.jpg);
   background-size: cover;
   background-position: top;
 
   /* crop  */
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
   clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+
+  /* 
+  -----------------------------
+  RESPONSIVE BACKGROUND IMAGES
+  -----------------------------
+  target big resolution screens except phones, 
+  because 1200px image is enough (1200px = 600px * 2)
+  192dpi - apple retina screen resolution as a reference
+  OR (comma in conditions) display original image for big screens 
+  */
+  @media (min-resolution: 192dpi) and (min-width: 37.5em), (min-width: 125em) {
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light, 0.8),
+        rgba($color-primary-dark, 0.8)
+      ),
+      url(../img/hero.jpg);
+  }
 
   // change angle
   @include respond(tab-land) {

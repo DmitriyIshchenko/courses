@@ -21,6 +21,15 @@
   background-size: cover;
   background-position: top;
 
+  @media (min-resolution: 192dpi) and (min-width: 37.5em), (min-width: 125em) {
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light, 0.8),
+        rgba($color-primary-dark, 0.8)
+      ),
+      url(../img/nat-4-large.jpg);
+  }
+
   // skew the entire section
   transform: skewY(-7deg);
 
@@ -79,6 +88,16 @@
     ),
     url(../img/nat-10.jpg);
   background-size: cover;
+
+  @media (min-resolution: 192dpi) and (min-width: 37.5em), (min-width: 125em) {
+    background-image: linear-gradient(
+        105deg,
+        rgba($color-white, 0.9) 0%,
+        rgba($color-white, 0.9) calc(50% - 1px),
+        transparent 50%
+      ),
+      url(../img/nat-10-large.jpg);
+  }
 
   // height: 50rem;
   border-radius: $default-border-radius;
