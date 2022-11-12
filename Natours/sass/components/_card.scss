@@ -82,6 +82,16 @@
           $color-secondary
         ),
         url(../img/nat-5.jpg);
+
+      @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em),
+        (min-width: 125em) {
+        background-image: linear-gradient(
+            to right bottom,
+            $color-secondary-light,
+            $color-secondary
+          ),
+          url(../img/nat-5-large.jpg);
+      }
     }
     &--2 {
       background-image: linear-gradient(
@@ -90,6 +100,16 @@
           $color-primary
         ),
         url(../img/nat-6.jpg);
+
+      @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em),
+        (min-width: 125em) {
+        background-image: linear-gradient(
+            to right bottom,
+            $color-primary-light,
+            $color-primary
+          ),
+          url(../img/nat-6-large.jpg);
+      }
     }
     &--3 {
       background-image: linear-gradient(
@@ -98,6 +118,16 @@
           $color-tertiary
         ),
         url(../img/nat-7.jpg);
+
+      @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em),
+        (min-width: 125em) {
+        background-image: linear-gradient(
+            to right bottom,
+            $color-tertiary-light,
+            $color-tertiary
+          ),
+          url(../img/nat-7-large.jpg);
+      }
     }
   }
 
@@ -190,9 +220,12 @@
     font-weight: 100;
   }
 
-  // MEDIA QUERY
-  // a lot of rewriting, so there is a separate media query
-  @include respond(tab-port) {
+  /* MEDIA QUERY
+  a lot of rewriting, so there is a separate media query
+  also there is no way to add a second condition for touch devices to media query mixin,
+  so we need to write it manually
+  */
+  @media only screen and (max-width: 56.25em), only screen and (hover: none) {
     // there is no longer back side, so there is no need to specify height, same with the sides
     height: auto;
     border-radius: $default-border-radius;

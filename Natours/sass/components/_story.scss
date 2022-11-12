@@ -27,15 +27,21 @@
     float: left;
     width: 15rem;
     height: 15rem;
+    overflow: hidden;
+    border-radius: 50%;
 
-    // makes text float around, in order to work need to be floated, also need to have defined width and height
-    // <radius> at <x coord> <y coord>
-    -webkit-shape-outside: circle(50% at 50% 50%);
-    shape-outside: circle(50% at 50% 50%);
+    @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+      // circle itself
+      -webkit-clip-path: circle(50% at 50% 50%);
+      clip-path: circle(50% at 50% 50%);
 
-    // circle itself
-    -webkit-clip-path: circle(50% at 50% 50%);
-    clip-path: circle(50% at 50% 50%);
+      // makes text float around, in order to work need to be floated, also need to have defined width and height
+      // <radius> at <x coord> <y coord>
+      -webkit-shape-outside: circle(50% at 50% 50%);
+      shape-outside: circle(50% at 50% 50%);
+
+      border-radius: none; // for floating text
+    }
 
     transform: translateX(-3rem) skewX(12deg);
 

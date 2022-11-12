@@ -15,6 +15,15 @@
   opacity: 0;
   visibility: hidden;
 
+  // feature query
+  @supports (-webkit-backdrop-filter: blur(10px)) or
+    (backdrop-filter: blur(10px)) {
+    // applies to the element that's behind
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba($color-black, 0.3);
+  }
+
   &__content {
     @include absCenter;
     display: table; // same height for both sides
