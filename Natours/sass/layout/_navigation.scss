@@ -65,7 +65,7 @@
   &__nav {
     position: fixed; // always stays on top until closed
     top: 0;
-    left: 0;
+    left: -100rem;
     // in the middle between the background and the button
     z-index: 1500;
 
@@ -139,6 +139,7 @@
 
   // show navigation when checkbox is checked
   &__checkbox:checked ~ &__nav {
+    left: 0;
     opacity: 1;
     width: 100%;
   }
