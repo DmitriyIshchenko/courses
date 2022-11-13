@@ -27,6 +27,10 @@
 }
 
 .sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   // no growing, no shrinking, width - 18% (ONLY USE flex-basis)
   flex: 0 0 18%;
   background-color: var(--color-grey-dark-1);
@@ -36,5 +40,8 @@
   // make it occupy the rest of the available space
   flex: 1;
   background-color: #fff;
+
+  // test
+  height: 80rem;
   background-color: orangered;
 }
