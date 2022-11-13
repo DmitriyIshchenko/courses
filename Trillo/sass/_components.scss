@@ -1,0 +1,145 @@
+/*
+--------------------------------------------
+LOGO
+--------------------------------------------
+*/
+.logo {
+  height: 3.5rem;
+  margin-left: 2rem;
+}
+/*
+--------------------------------------------
+SEARCH BOX
+--------------------------------------------
+*/
+
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 40%;
+
+  &__input {
+    padding: 0.7rem 2rem;
+    // button will move on top of the input
+    margin-right: -3.25rem;
+    width: 90%;
+
+    border: none;
+    border-radius: 100rem;
+    background-color: var(--color-grey-light-2);
+
+    transition: all 0.2s;
+
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+
+    &:focus {
+      outline: none;
+      width: 100%;
+      background-color: var(--color-grey-light-3);
+    }
+
+    &::placeholder {
+      font-weight: 100;
+      color: var(--color-grey-light-4);
+    }
+  }
+
+  // change btn background when input is focused
+  // can actually use transparent instead
+  // &__input:focus + &__button {
+  //   background-color: var(--color-grey-light-3);
+  // }
+
+  &__button {
+    border: none;
+    background-color: transparent;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+
+  &__icon {
+    height: 2rem;
+    width: 2rem;
+
+    // change the color of svg
+    fill: var(--color-grey-dark-3);
+  }
+}
+
+/*
+--------------------------------------------
+USER NAVIGATION
+--------------------------------------------
+*/
+
+.user-nav {
+  display: flex;
+  align-items: center;
+
+  // fill the entire space
+  align-self: stretch;
+
+  // all of the direct children (icon-box and user in this case)
+  & > * {
+    display: flex;
+    align-items: center;
+
+    padding: 0 2rem;
+    height: 100%;
+    transition: all 0.4s;
+
+    cursor: pointer;
+  }
+
+  & > *:hover {
+    background-color: var(--color-grey-light-2);
+  }
+
+  &__icon-box {
+    position: relative;
+  }
+
+  &__icon {
+    height: 2.25rem;
+    width: 2.25rem;
+
+    fill: var(--color-grey-dark-2);
+  }
+
+  &__notification {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 1.75rem;
+    width: 1.75rem;
+
+    border-radius: 50%;
+    background-color: var(--color-primary);
+
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  &__user-photo {
+    margin-right: 1rem;
+    height: 3.75rem;
+    width: 3.75rem;
+    border-radius: 50%;
+  }
+}
