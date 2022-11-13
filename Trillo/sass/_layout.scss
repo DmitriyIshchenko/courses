@@ -17,7 +17,7 @@
   height: 7rem;
 
   background-color: #fff;
-  border-bottom: 1px solid var(--color-grey-light-2);
+  border-bottom: var(--line);
 
   font-size: 1.4rem;
 }
@@ -40,7 +40,30 @@
   // make it occupy the rest of the available space
   flex: 1;
   background-color: #fff;
+}
 
-  // test
-  height: 80rem;
+.detail {
+  display: flex;
+  padding: 4.5rem;
+
+  border-bottom: var(--line);
+  background-color: var(--color-grey-light-1);
+
+  font-size: 1.4rem;
+}
+
+.description {
+  flex: 0 0 60%;
+  margin-right: 4.5rem;
+  padding: 3rem;
+  box-shadow: var(--shadow-light);
+  background-color: #fff;
+}
+
+.user-reviews {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  flex: 1; // occupy the remaining space
 }
