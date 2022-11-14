@@ -20,6 +20,13 @@ SEARCH BOX
 
   flex: 0 0 40%;
 
+  // move search bar to the end
+  @media only screen and (max-width: $bp-smallest) {
+    flex: 0 0 100%;
+    order: 1;
+    background-color: var(--color-grey-light-2);
+  }
+
   &__input {
     padding: 0.7rem 2rem;
     // button will move on top of the input
@@ -155,11 +162,26 @@ SIDE NAVIGATION
   list-style: none;
   font-size: 1.4rem;
 
+  @media only screen and (max-width: $bp-medium) {
+    display: flex;
+    justify-content: space-between;
+
+    margin: 0;
+  }
+
   &__item {
     position: relative;
 
     &:not(:last-child) {
       margin-bottom: 0.5rem;
+
+      @media only screen and (max-width: $bp-medium) {
+        margin: 0;
+      }
+    }
+
+    @media only screen and (max-width: $bp-medium) {
+      flex: 1;
     }
   }
 
@@ -203,6 +225,16 @@ SIDE NAVIGATION
       text-decoration: none;
       text-transform: uppercase;
       color: var(--color-grey-light-1);
+
+      @media only screen and (max-width: $bp-medium) {
+        justify-content: center;
+        padding: 2rem;
+      }
+
+      @media only screen and (max-width: $bp-small) {
+        flex-direction: column;
+        padding: 1.5rem 0.5rem;
+      }
     }
   }
 
@@ -213,6 +245,14 @@ SIDE NAVIGATION
 
     // color of the current element or the parent element
     fill: currentColor;
+
+    @media only screen and (max-width: $bp-small) {
+      margin-right: 0;
+      margin-bottom: 0.5rem;
+
+      height: 1.5rem;
+      width: 1.5rem;
+    }
   }
 }
 
@@ -227,6 +267,10 @@ LEGAL TEXT
   text-align: center;
   font-size: 1.2rem;
   color: var(--color-grey-light-4);
+
+  @media only screen and (max-width: $bp-medium) {
+    display: none;
+  }
 }
 
 /*
@@ -262,6 +306,18 @@ HOTEL OVERVIEW
     font-weight: 300;
     text-transform: uppercase;
     letter-spacing: 1px;
+
+    @media only screen and (max-width: $bp-small) {
+      font-size: 1.8rem;
+      padding: 1.25rem 2rem;
+    }
+    @media only screen and (max-width: $bp-smallest) {
+      font-size: 1.5rem;
+    }
+    @media only screen and (max-width: $bp-tiny) {
+      padding: 1.5rem 1rem;
+      font-size: 1rem;
+    }
   }
 
   &__stars {
@@ -285,6 +341,11 @@ HOTEL OVERVIEW
     height: 1.75rem;
 
     fill: var(--color-primary);
+
+    @media only screen and (max-width: $bp-smallest) {
+      width: 1.3rem;
+      height: 1.3rem;
+    }
   }
 
   &__location {
@@ -310,17 +371,34 @@ HOTEL OVERVIEW
 
     background-color: var(--color-primary);
     color: #fff;
+
+    @media only screen and (max-width: $bp-small) {
+      padding: 0 1.5rem;
+    }
+    @media only screen and (max-width: $bp-tiny) {
+      margin-left: 1rem;
+      text-align: center;
+      padding: 0 1.5rem;
+    }
   }
 
   &__rating-average {
     margin-bottom: -3px;
     font-size: 2.25rem;
     font-weight: 300;
+
+    @media only screen and (max-width: $bp-small) {
+      font-size: 1.8rem;
+    }
   }
 
   &__rating-count {
     font-size: 0.8rem;
     text-transform: uppercase;
+
+    @media only screen and (max-width: $bp-small) {
+      font-size: 0.5rem;
+    }
   }
 }
 
@@ -412,6 +490,10 @@ LIST
   border-bottom: var(--line);
   list-style: none;
 
+  @media only screen and (max-width: $bp-smallest) {
+    padding: 3rem 0;
+  }
+
   // give each item a fixed width to create 2 columns
   &__item {
     display: flex;
@@ -428,16 +510,19 @@ LIST
     width: 1rem;
     margin-right: 0.7rem;
 
-    // older browsers
-    // background-image: url(../img/chevron-thin-right.svg);
-    // background-size: cover;
+    @supports (-webkit-mask-image: url()) or (mask-image: url()) {
+      // Newer browsers - masks
+      background-color: var(--color-primary);
+      -webkit-mask-image: url(../img/chevron-thin-right.svg);
+      -webkit-mask-size: cover;
+      mask-image: url(../img/chevron-thin-right.svg);
+      mask-size: cover;
+      background-image: none;
+    }
 
-    // Newer browsers - masks
-    background-color: var(--color-primary);
-    -webkit-mask-image: url(../img/chevron-thin-right.svg);
-    -webkit-mask-size: cover;
-    mask-image: url(../img/chevron-thin-right.svg);
-    mask-size: cover;
+    //older browsers
+    background-image: url(../img/chevron-thin-right.svg);
+    background-size: cover;
   }
 }
 
@@ -458,7 +543,8 @@ RECOMMEND
     margin-right: auto;
   }
 
-  &__fiends {
+  &__friends {
+    display: flex;
   }
 
   &__photo {
@@ -473,7 +559,7 @@ RECOMMEND
     border: 3px solid #fff;
 
     &:not(:last-child) {
-      margin-right: -1.5rem;
+      margin-right: -2rem;
     }
   }
 }
@@ -494,6 +580,11 @@ REVIEWS
   background-color: #fff;
 
   overflow: hidden;
+
+  @media only screen and (max-width: $bp-medium) {
+    margin-bottom: 3rem;
+    padding: 2rem;
+  }
 
   &__text {
     position: relative;
@@ -562,18 +653,26 @@ CALL TO ACTION
   padding: 3.5rem 0;
   text-align: center;
 
+  @media only screen and (max-width: $bp-medium) {
+    padding: 2.5rem 0;
+  }
+
   &__book-now {
     margin-bottom: 3.5rem;
 
     font-size: rem;
     font-weight: 300;
     text-transform: uppercase;
+
+    @media only screen and (max-width: $bp-medium) {
+      margin-bottom: 2rem;
+    }
   }
 }
 
 /*
 ------------
-CALL TO ACTION
+BUTTON
 ------------
 */
 
