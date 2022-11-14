@@ -1,0 +1,204 @@
+.navigation {
+  &__checkbox {
+    display: none;
+  }
+
+  &__button {
+    position: fixed;
+    top: 6rem;
+    right: 6rem;
+    z-index: 2000;
+
+    height: 7rem;
+    width: 7rem;
+    border-radius: 50%;
+    box-shadow: 0 1rem 3rem rgba($color-black, 0.1);
+    background-color: $color-white;
+
+    text-align: center; // center lines
+    cursor: pointer;
+
+    // align button with the logo
+    @include respond(tab-port) {
+      top: 4rem;
+      right: 4rem;
+    }
+    @include respond(phone) {
+      top: 3rem;
+      right: 3rem;
+    }
+  }
+
+  &__background {
+    // like absolute, but doesn't move as we scroll the page
+    position: fixed;
+    // .5rem is the difference between the background and button
+    top: 6.5rem;
+    right: 6.5rem;
+    z-index: 1000;
+
+    //start as a circle
+    height: 6rem;
+    width: 6rem;
+    border-radius: 50%;
+
+    // custom easing function
+    transition: all 0.8s cubic-bezier(0.83, 0, 0.17, 1);
+
+    background-image: radial-gradient(
+      $color-primary-light,
+      $color-primary-dark
+    );
+
+    // align button with the logo
+    @include respond(tab-port) {
+      top: 4.5rem;
+      right: 4.5rem;
+    }
+
+    @include respond(phone) {
+      top: 3.5rem;
+      right: 3.5rem;
+    }
+  }
+
+  &__nav {
+    position: fixed; // always stays on top until closed
+    top: 0;
+    left: -100rem;
+    // in the middle between the background and the button
+    z-index: 1500;
+
+    height: 100vh;
+
+    // hide navigation
+    width: 0;
+    opacity: 0;
+
+    // custom easing function
+    transition: all 0.8s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  }
+
+  &__list {
+    @include absCenter;
+
+    width: 100%; // fix moving to the right
+
+    list-style: none;
+    text-align: center;
+  }
+
+  &__item {
+    margin: 1rem;
+  }
+
+  &__link {
+    &:link,
+    &:visited {
+      display: inline-block;
+
+      padding: 1rem 2rem;
+
+      transition: all 0.4s;
+
+      font-size: 3rem;
+      font-weight: 300;
+      text-decoration: none;
+      text-transform: uppercase;
+      color: $color-white;
+
+      //solid color gradient
+      background-image: linear-gradient(
+        120deg,
+        transparent 0%,
+        transparent 50%,
+        $color-white 50%
+      );
+      // basically moves white part to the right by increasing width of entire background
+      background-size: 230%;
+
+      span {
+        display: inline-block;
+        margin-right: 1.5rem;
+      }
+    }
+
+    &:hover,
+    &:active {
+      background-position: 100%;
+      color: $color-primary;
+      transform: translateX(1rem);
+    }
+  }
+
+  // FUNCTIONALITY
+  // scale to fill the entire viewport
+  &__checkbox:checked ~ &__background {
+    transform: scale(120);
+  }
+
+  // show navigation when checkbox is checked
+  &__checkbox:checked ~ &__nav {
+    left: 0;
+    opacity: 1;
+    width: 100%;
+  }
+
+  // ICON
+  &__icon {
+    position: relative;
+    margin-top: 3.5rem;
+
+    &,
+    &::before,
+    &::after {
+      display: inline-block;
+      width: 3rem;
+      height: 2px;
+
+      transition: all 0.2s;
+
+      background-color: $color-grey-dark-3;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+    }
+
+    &::before {
+      top: -0.8rem;
+      // makes point of rotation right instead of center
+      // transform-origin: right;
+    }
+
+    &::after {
+      top: 0.8rem;
+    }
+  }
+
+  &__button:hover &__icon:before {
+    top: -1rem;
+  }
+  &__button:hover &__icon:after {
+    top: 1rem;
+  }
+
+  &__checkbox:checked + &__button &__icon {
+    // hide the middle line
+    background-color: transparent;
+  }
+
+  // rotate top and bottom lines to form a cross icon
+  &__checkbox:checked + &__button &__icon::before {
+    top: 0;
+    transform: rotate(135deg);
+  }
+
+  &__checkbox:checked + &__button &__icon::after {
+    top: 0;
+    transform: rotate(-135deg);
+  }
+}
