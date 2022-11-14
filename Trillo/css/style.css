@@ -414,6 +414,60 @@ REVIEWS
     font-family: sans-serif;
     color: var(--color-grey-light-2); }
 
+/*
+------------
+CALL TO ACTION
+------------
+*/
+.cta {
+  padding: 3.5rem 0;
+  text-align: center; }
+  .cta__book-now {
+    margin-bottom: 3.5rem;
+    font-size: rem;
+    font-weight: 300;
+    text-transform: uppercase; }
+
+/*
+------------
+CALL TO ACTION
+------------
+*/
+.btn {
+  position: relative;
+  border: none;
+  border-radius: 100rem;
+  overflow: hidden;
+  background-image: linear-gradient(to right, var(--color-primary-light), var(--color-primary-dark));
+  font-size: 1.5rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer; }
+  .btn > * {
+    display: inline-block;
+    transition: all 0.3s;
+    height: 100%;
+    width: 100%; }
+  .btn__visible {
+    padding: 2rem 7.5rem; }
+  .btn__invisible {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    /* width inline padding it doesn't have enough space to fit the content, 
+    that's why we need to specify height and width */
+    padding: 2rem 0; }
+  .btn:hover {
+    background-image: linear-gradient(to left, var(--color-primary-light), var(--color-primary-dark)); }
+  .btn:hover .btn__visible {
+    transform: translateY(100%); }
+  .btn:hover .btn__invisible {
+    top: 0; }
+  .btn:focus {
+    outline: none;
+    animation: pulsate 1s infinite; }
+
 .container {
   max-width: 120rem;
   margin: 8rem auto;
