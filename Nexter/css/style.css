@@ -1,0 +1,85 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; }
+
+body {
+  line-height: 1.6;
+  font-family: "Nunito", sans-serif;
+  font-weight: 30;
+  color: #6d5d4b; }
+
+.container {
+  display: grid;
+  /*
+  ROW TRACKS
+
+  1st row - 80vh
+  2nd row - we want to the rows to grow with the content of feature boxes, so there is a min-content for that
+  3rd row - decrease sizes of boxes as viewport shrinks -> use viewport width
+  4th row - similar to 2nd
+  5th row - same for the gallery
+  6th row - and for the footer
+  */
+  grid-template-rows: 80vh min-content 40vw repeat(3, min-content);
+  /*
+  COLUMN 
+  1st col - sidebar
+  We want fixed width for the columns at wide screens, but newer below min-content
+  1140px/8 = 142.5 ~= 14rem
+  
+  To center 8 columns between the sidebar and the end of the page, we need to add 2 more columns one to each side of 8 columns in the middle
+  These 10 columns can will be used for creating full-bleed sections like header, gallery etc.
+  
+  minmax(6rem, 1fr) to prevent content from sticking to sidebar w/o any margin
+  */
+  grid-template-columns: [sidebar-start] 8rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end]; }
+  .container > * {
+    padding: 40px;
+    font-size: 3rem; }
+
+.sidebar {
+  background-color: #c69963;
+  grid-column: sidebar-start / sidebar-end;
+  grid-row: 1 / -1; }
+
+.header {
+  background-color: #54483a;
+  grid-column: full-start / col-end 6; }
+
+.realtors {
+  background-color: #101d2c;
+  grid-column: col-start 7 / full-end; }
+
+.features {
+  background-color: #aaa;
+  grid-column: center-start / center-end;
+  grid-row: 2 / 3; }
+
+.story__pictures {
+  background-color: #c69963;
+  grid-column: full-start / col-end 4; }
+
+.story__content {
+  background-color: #f9f7f6;
+  grid-column: col-start 5 / full-end; }
+
+.homes {
+  background-color: #101d2c;
+  grid-column: center-start / center-end; }
+
+.gallery {
+  background-color: #54483a;
+  grid-column: full-start / full-end;
+  grid-row: -2 / -3; }
+
+.footer {
+  background-color: #101d2c;
+  grid-column: full-start / full-end;
+  grid-row: -1 / -2; }

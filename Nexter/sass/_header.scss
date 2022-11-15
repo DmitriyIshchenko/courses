@@ -1,0 +1,6 @@
+.header {
+  background-color: $color-grey-dark-1;
+
+  // take 1 column from 8 col grid for the realtors
+  grid-column: full-start / col-end 6;
+}
