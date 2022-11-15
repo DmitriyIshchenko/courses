@@ -40,9 +40,17 @@ body {
   minmax(6rem, 1fr) to prevent content from sticking to sidebar w/o any margin
   */
   grid-template-columns: [sidebar-start] 8rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end]; }
-  .container > * {
-    padding: 40px;
-    font-size: 3rem; }
+
+.heading-1, .heading-2, .heading-3, .heading-4 {
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 400; }
+
+.heading-4 {
+  font-size: 1.9rem; }
+  .heading-4--light {
+    color: #f9f7f6; }
+  .heading-4--dark {
+    color: #54483a; }
 
 .sidebar {
   background-color: #c69963;
@@ -58,9 +66,32 @@ body {
   grid-column: col-start 7 / full-end; }
 
 .features {
-  background-color: #aaa;
   grid-column: center-start / center-end;
-  grid-row: 2 / 3; }
+  grid-row: 2 / 3;
+  display: grid;
+  /* 
+    auto-fit will create as many tracks as can fit in based on defined width, 
+    which should always stay between 25rem and 1fr
+  */
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  align-items: start;
+  gap: 6rem;
+  margin: 15rem 0; }
+
+.feature {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  row-gap: 1.5rem;
+  column-gap: 2.5rem; }
+  .feature__icon {
+    grid-column: 1 / 2;
+    grid-row: 1 / span 2;
+    width: 4.5rem;
+    height: 4.5rem;
+    transform: translateY(-1rem);
+    fill: #c69963; }
+  .feature__text {
+    font-size: 1.7rem; }
 
 .story__pictures {
   background-color: #c69963;
