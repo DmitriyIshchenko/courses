@@ -1,6 +1,64 @@
 .header {
-  background-color: $color-grey-dark-1;
-
   // take 1 column from 8 col grid for the realtors
   grid-column: full-start / col-end 6;
+
+  display: grid;
+  // center entire track inside the parent grid container
+  justify-content: center;
+
+  grid-template-rows: 1fr min-content 6rem 1fr;
+  grid-template-columns: max-content;
+  row-gap: 1.5rem;
+
+  padding: 8rem;
+  padding-top: 4rem;
+
+  background-image: linear-gradient(
+      rgba($color-secondary, 0.93),
+      rgba($color-secondary, 0.93)
+    ),
+    url(../img/hero.jpeg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; // fixes the strange 1px line w/o gradient
+
+  &__logo {
+    justify-self: center;
+    height: 3rem;
+  }
+  &__btn {
+    align-self: start;
+    justify-self: start;
+  }
+
+  &__seenon-text {
+    display: grid;
+    grid-template-columns: 1fr max-content 1fr;
+    align-items: center;
+    column-gap: 1.5rem;
+
+    font-size: 1.6rem;
+    color: $color-grey-light-2;
+
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      height: 1px;
+      background-color: currentColor;
+    }
+  }
+
+  &__seenon-logos {
+    display: grid;
+    justify-items: center;
+
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 3rem;
+
+    img {
+      height: 2.5rem;
+      filter: brightness(70%);
+    }
+  }
 }
