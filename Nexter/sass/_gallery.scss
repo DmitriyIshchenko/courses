@@ -1,6 +1,5 @@
 .gallery {
   grid-column: full-start / full-end;
-  grid-row: -2 / -3;
 
   display: grid;
   grid-template-columns: repeat(8, 1fr);

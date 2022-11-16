@@ -18,6 +18,11 @@
       ),
       url(../img/back.jpg);
     background-size: cover;
+
+    @media only screen and (max-width: $bp-medium) {
+      grid-column: 1 / -1;
+      padding: 6rem;
+    }
   }
 
   &__img--1 {
@@ -26,6 +31,11 @@
     grid-row: 2 / 6;
 
     box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.1);
+
+    @media only screen and (max-width: $bp-medium) {
+      grid-column: 1 / 5;
+      grid-row: 1 / -1;
+    }
   }
 
   &__img--2 {
@@ -37,6 +47,11 @@
     z-index: 10;
 
     box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
+
+    @media only screen and (max-width: $bp-medium) {
+      grid-row: 1 / -1;
+      width: 100%;
+    }
   }
 
   &__content {
@@ -50,6 +65,11 @@
     padding: 6rem 8vw;
 
     background-color: $color-grey-light-1;
+
+    @media only screen and (max-width: $bp-medium) {
+      grid-column: 1 / -1;
+      grid-row: 5 / 6;
+    }
   }
 
   &__text {
