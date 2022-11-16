@@ -1,0 +1,745 @@
+/*
+--------------------------------------------
+LOGO
+--------------------------------------------
+*/
+.logo {
+  height: 3.5rem;
+  margin-left: 2rem;
+}
+/*
+--------------------------------------------
+SEARCH BOX
+--------------------------------------------
+*/
+
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 40%;
+
+  // move search bar to the end
+  @media only screen and (max-width: $bp-smallest) {
+    flex: 0 0 100%;
+    order: 1;
+    background-color: var(--color-grey-light-2);
+  }
+
+  &__input {
+    padding: 0.7rem 2rem;
+    // button will move on top of the input
+    margin-right: -3.25rem;
+    width: 90%;
+
+    border: none;
+    border-radius: 100rem;
+    background-color: var(--color-grey-light-2);
+
+    transition: all 0.2s;
+
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+
+    &:focus {
+      outline: none;
+      width: 100%;
+      background-color: var(--color-grey-light-3);
+    }
+
+    &::placeholder {
+      font-weight: 100;
+      color: var(--color-grey-light-4);
+    }
+  }
+
+  // change btn background when input is focused
+  // can actually use transparent instead
+  // &__input:focus + &__button {
+  //   background-color: var(--color-grey-light-3);
+  // }
+
+  &__button {
+    border: none;
+    background-color: transparent;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+
+  &__icon {
+    height: 2rem;
+    width: 2rem;
+
+    // change the color of svg
+    fill: var(--color-grey-dark-3);
+  }
+}
+
+/*
+--------------------------------------------
+USER NAVIGATION
+--------------------------------------------
+*/
+
+.user-nav {
+  display: flex;
+  align-items: center;
+
+  // fill the entire space
+  align-self: stretch;
+
+  // all of the direct children (icon-box and user in this case)
+  & > * {
+    display: flex;
+    align-items: center;
+
+    padding: 0 2rem;
+    height: 100%;
+    transition: all 0.4s;
+
+    cursor: pointer;
+  }
+
+  & > *:hover {
+    background-color: var(--color-grey-light-2);
+  }
+
+  &__icon-box {
+    position: relative;
+  }
+
+  &__icon {
+    height: 2.25rem;
+    width: 2.25rem;
+
+    fill: var(--color-grey-dark-2);
+  }
+
+  &__notification {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 1.75rem;
+    width: 1.75rem;
+
+    border-radius: 50%;
+    background-color: var(--color-primary);
+
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  &__user-photo {
+    margin-right: 1rem;
+    height: 3.75rem;
+    width: 3.75rem;
+    border-radius: 50%;
+  }
+}
+
+/*
+--------------------------------------------
+SIDE NAVIGATION
+--------------------------------------------
+*/
+
+.side-nav {
+  margin-top: 3.5rem;
+  list-style: none;
+  font-size: 1.4rem;
+
+  @media only screen and (max-width: $bp-medium) {
+    display: flex;
+    justify-content: space-between;
+
+    margin: 0;
+  }
+
+  &__item {
+    position: relative;
+
+    &:not(:last-child) {
+      margin-bottom: 0.5rem;
+
+      @media only screen and (max-width: $bp-medium) {
+        margin: 0;
+      }
+    }
+
+    @media only screen and (max-width: $bp-medium) {
+      flex: 1;
+    }
+  }
+
+  &__item:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 3px;
+    background-color: var(--color-primary);
+
+    transform: scaleY(0);
+    // staged animation width with delay
+    transition: transform 0.2s, width 0.4s cubic-bezier(1, 0, 0, 1) 0.2s,
+      background-color 0.1s;
+  }
+
+  // animated hover and selected state
+  &__item:hover::before,
+  &__item--active::before {
+    transform: scaleY(1);
+    width: 100%;
+  }
+
+  &__item:active::before {
+    background-color: var(--color-primary-light);
+  }
+
+  &__link {
+    &:link,
+    &:visited {
+      // link ot top of animated before element
+      position: relative;
+      z-index: 10;
+
+      display: flex;
+      align-items: center;
+
+      padding: 1.5rem 3rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      color: var(--color-grey-light-1);
+
+      @media only screen and (max-width: $bp-medium) {
+        justify-content: center;
+        padding: 2rem;
+      }
+
+      @media only screen and (max-width: $bp-small) {
+        flex-direction: column;
+        padding: 1.5rem 0.5rem;
+      }
+    }
+  }
+
+  &__icon {
+    margin-right: 2rem;
+    height: 1.75rem;
+    width: 1.75rem;
+
+    // color of the current element or the parent element
+    fill: currentColor;
+
+    @media only screen and (max-width: $bp-small) {
+      margin-right: 0;
+      margin-bottom: 0.5rem;
+
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+  }
+}
+
+/*
+--------------------------------------------
+LEGAL TEXT
+--------------------------------------------
+*/
+
+.legal {
+  padding: 2.5rem;
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--color-grey-light-4);
+
+  @media only screen and (max-width: $bp-medium) {
+    display: none;
+  }
+}
+
+/*
+-------------------------------------------- 
+GALLERY
+--------------------------------------------
+*/
+
+.gallery {
+  display: flex;
+  &__photo {
+    width: 100%;
+    display: block;
+  }
+}
+
+/*
+-------------------------------------------- 
+HOTEL OVERVIEW
+--------------------------------------------
+*/
+
+.overview {
+  display: flex;
+  align-items: center;
+
+  border-bottom: var(--line);
+
+  &__heading {
+    padding: 1.5rem 3rem;
+
+    font-size: 2.25rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    @media only screen and (max-width: $bp-small) {
+      font-size: 1.8rem;
+      padding: 1.25rem 2rem;
+    }
+    @media only screen and (max-width: $bp-smallest) {
+      font-size: 1.5rem;
+    }
+    @media only screen and (max-width: $bp-tiny) {
+      padding: 1.5rem 1rem;
+      font-size: 1rem;
+    }
+  }
+
+  &__stars {
+    /*
+      svgs behave similar to text and create small space at the bottom,
+      so we need to center them by making the parent element the flex container
+    */
+    display: flex;
+    align-items: center;
+
+    /* we don't actually want to this item occupy all space
+    so we're using the margin:auto trick to create space between flex items
+    */
+    // flex: 1;
+    margin-right: auto;
+  }
+
+  &__icon-star,
+  &__icon-location {
+    width: 1.75rem;
+    height: 1.75rem;
+
+    fill: var(--color-primary);
+
+    @media only screen and (max-width: $bp-smallest) {
+      width: 1.3rem;
+      height: 1.3rem;
+    }
+  }
+
+  &__location {
+    display: flex;
+    align-items: center;
+
+    font-size: 1.2rem;
+  }
+
+  &__icon-location {
+    margin-right: 0.5rem;
+  }
+
+  &__rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+
+    margin-left: 3rem;
+    padding: 0 2.25rem;
+
+    background-color: var(--color-primary);
+    color: #fff;
+
+    @media only screen and (max-width: $bp-small) {
+      padding: 0 1.5rem;
+    }
+    @media only screen and (max-width: $bp-tiny) {
+      margin-left: 1rem;
+      text-align: center;
+      padding: 0 1.5rem;
+    }
+  }
+
+  &__rating-average {
+    margin-bottom: -3px;
+    font-size: 2.25rem;
+    font-weight: 300;
+
+    @media only screen and (max-width: $bp-small) {
+      font-size: 1.8rem;
+    }
+  }
+
+  &__rating-count {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+
+    @media only screen and (max-width: $bp-small) {
+      font-size: 0.5rem;
+    }
+  }
+}
+
+/*
+  ---------------------------
+  INLINE BUTTON 
+  ---------------------------
+*/
+
+.btn-inline {
+  display: inline-block;
+
+  padding-bottom: 2px;
+  border: none;
+  border-bottom: 1px solid currentColor;
+
+  background-color: transparent;
+  cursor: pointer;
+
+  transition: all 0.2s;
+
+  font-size: inherit;
+  color: var(--color-primary);
+
+  // animate space increasing between text and arrow
+  & span {
+    margin-left: 3px;
+    transition: all 0.2s;
+  }
+
+  &:hover {
+    color: var(--color-grey-dark-1);
+
+    span {
+      margin-left: 8px;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    // infinite animation
+    animation: pulsate 1s infinite;
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+    box-shadow: none;
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.25);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: none;
+  }
+}
+
+/*
+---------------------------
+PARAGRAPH
+---------------------------
+*/
+
+// use :last-of-type instead of :last-child
+.paragraph:not(:last-of-type) {
+  margin-bottom: 2rem;
+}
+
+/*
+---------------------------
+LIST
+---------------------------
+*/
+
+.list {
+  display: flex;
+  // allow flex items to form columns
+  flex-wrap: wrap;
+
+  margin: 3rem 0;
+  padding: 3rem;
+
+  border-top: var(--line);
+  border-bottom: var(--line);
+  list-style: none;
+
+  @media only screen and (max-width: $bp-smallest) {
+    padding: 3rem 0;
+  }
+
+  // give each item a fixed width to create 2 columns
+  &__item {
+    display: flex;
+    align-items: center;
+    flex: 0 0 50%;
+    margin-bottom: 0.7rem;
+  }
+
+  // include svg as a bg image
+  &__item:before {
+    content: "";
+    display: inline-block;
+    height: 1rem;
+    width: 1rem;
+    margin-right: 0.7rem;
+
+    @supports (-webkit-mask-image: url()) or (mask-image: url()) {
+      // Newer browsers - masks
+      background-color: var(--color-primary);
+      -webkit-mask-image: url(../img/chevron-thin-right.svg);
+      -webkit-mask-size: cover;
+      mask-image: url(../img/chevron-thin-right.svg);
+      mask-size: cover;
+      background-image: none;
+    }
+
+    //older browsers
+    background-image: url(../img/chevron-thin-right.svg);
+    background-size: cover;
+  }
+}
+
+/*
+---------------------------
+RECOMMEND
+---------------------------
+*/
+.recommend {
+  display: flex;
+  align-items: center;
+
+  font-size: 1.3rem;
+  color: var(--color-grey-dark-3);
+
+  &__count {
+    // push photos to the right side
+    margin-right: auto;
+  }
+
+  &__friends {
+    display: flex;
+  }
+
+  &__photo {
+    /* 
+      use content-box to prevent border-box from taking space from content
+    */
+    box-sizing: content-box;
+
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    border: 3px solid #fff;
+
+    &:not(:last-child) {
+      margin-right: -2rem;
+    }
+  }
+}
+
+/*
+------------
+REVIEWS
+------------
+*/
+
+.review {
+  position: relative;
+
+  margin-bottom: 3.5rem;
+  padding: 3rem;
+
+  box-shadow: var(--shadow-light);
+  background-color: #fff;
+
+  overflow: hidden;
+
+  @media only screen and (max-width: $bp-medium) {
+    margin-bottom: 3rem;
+    padding: 2rem;
+  }
+
+  &__text {
+    position: relative;
+    z-index: 10;
+    margin-bottom: 2rem;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+  }
+
+  &__photo {
+    height: 4.5rem;
+    width: 4.5rem;
+    margin-right: 1.5rem;
+    border-radius: 50%;
+  }
+
+  &__user-box {
+    margin-right: auto;
+  }
+
+  &__user-name {
+    margin-bottom: 0.4rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  &__user-date {
+    font-size: 1rem;
+    color: var(--color-grey-dark-3);
+  }
+
+  &__rating {
+    color: var(--color-primary);
+    font-size: 2.2rem;
+    font-weight: 300;
+  }
+
+  // quotation mark
+  &::before {
+    content: "\201C";
+    position: absolute;
+    top: -3.5rem;
+    left: -0.8rem;
+    z-index: 1;
+
+    overflow: hidden;
+
+    line-height: 1;
+    font-size: 20rem;
+    font-family: sans-serif;
+    color: var(--color-grey-light-2);
+  }
+}
+
+/*
+------------
+CALL TO ACTION
+------------
+*/
+
+.cta {
+  padding: 3.5rem 0;
+  text-align: center;
+
+  @media only screen and (max-width: $bp-medium) {
+    padding: 2.5rem 0;
+  }
+
+  &__book-now {
+    margin-bottom: 3.5rem;
+
+    font-size: rem;
+    font-weight: 300;
+    text-transform: uppercase;
+
+    @media only screen and (max-width: $bp-medium) {
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+/*
+------------
+BUTTON
+------------
+*/
+
+.btn {
+  position: relative;
+
+  border: none;
+  border-radius: 100rem;
+
+  // hide invisible part
+  overflow: hidden;
+
+  background-image: linear-gradient(
+    to right,
+    var(--color-primary-light),
+    var(--color-primary-dark)
+  );
+
+  font-size: 1.5rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: #fff;
+
+  cursor: pointer;
+
+  & > * {
+    display: inline-block;
+    transition: all 0.3s;
+
+    // same as parent
+    height: 100%;
+    width: 100%;
+  }
+
+  &__visible {
+    padding: 2rem 7.5rem;
+  }
+
+  // put invisible part on top of the button
+  &__invisible {
+    position: absolute;
+    top: -100%;
+    left: 0;
+
+    /* width inline padding it doesn't have enough space to fit the content, 
+    that's why we need to specify height and width */
+    padding: 2rem 0;
+  }
+
+  &:hover {
+    background-image: linear-gradient(
+      to left,
+      var(--color-primary-light),
+      var(--color-primary-dark)
+    );
+  }
+
+  // move down both elements by 100%
+  &:hover &__visible {
+    transform: translateY(100%);
+  }
+  &:hover &__invisible {
+    top: 0;
+  }
+
+  &:focus {
+    outline: none;
+    animation: pulsate 1s infinite;
+  }
+}
