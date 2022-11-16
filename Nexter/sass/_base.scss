@@ -1,0 +1,103 @@
+// COLOR VARIABLES
+$color-primary: #c69963;
+$color-primary-dark: #b28451;
+
+$color-secondary: #101d2c;
+
+$color-grey-light-1: #f9f7f6;
+$color-grey-light-2: #aaa;
+
+$color-grey-dark-1: #54483a;
+$color-grey-dark-2: #6d5d4b;
+
+// FONT VARIABLES
+$font-primary: "Nunito", sans-serif;
+$font-display: "Josefin Sans", sans-serif;
+
+// BREAKPOINTS
+$bp-largest: 75em; // 1200px
+$bp-large: 62.5em; // 1000px
+$bp-medium: 50em; // 800px;
+$bp-small: 37.5em; // 600px
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; // 1rem = 10px;
+
+  @media only screen and (max-width: $bp-largest) {
+    font-size: 50%; // 1rem = 8px;
+  }
+}
+
+body {
+  line-height: 1.6;
+  font-family: $font-primary;
+  font-weight: 30;
+  color: $color-grey-dark-2;
+}
+
+.container {
+  display: grid;
+  /*
+  ROW TRACKS
+
+  1st row - 80vh
+  2nd row - we want to the rows to grow with the content of feature boxes, so there is a min-content for that
+  3rd row - decrease sizes of boxes as viewport shrinks -> use viewport width
+  4th row - similar to 2nd
+  5th row - same for the gallery
+  6th row - and for the footer
+  */
+  grid-template-rows: 80vh min-content 40vw repeat(3, min-content);
+
+  /*
+  COLUMN TRACKS
+  1st col - sidebar
+  We want fixed width for the columns at wide screens, but newer below min-content
+  1140px/8 = 142.5 ~= 14rem
+  
+  To center 8 columns between the sidebar and the end of the page, we need to add 2 more columns one to each side of 8 columns in the middle
+  These 10 columns can will be used for creating full-bleed sections like header, gallery etc.
+  
+  minmax(6rem, 1fr) to prevent content from sticking to sidebar w/o any margin
+  */
+
+  grid-template-columns:
+    [sidebar-start] 8rem [sidebar-end full-start]
+    minmax(6rem, 1fr)
+    [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end])
+    [center-end]
+    minmax(6rem, 1fr) [full-end];
+
+  @media only screen and (max-width: $bp-large) {
+    /*
+      Add a row and remove the first column in order to put sidebar on the top of the page
+    */
+
+    grid-template-rows: 6rem 80vh min-content 40vw repeat(3, min-content);
+    grid-template-columns:
+      [full-start]
+      minmax(6rem, 1fr)
+      [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end])
+      [center-end]
+      minmax(6rem, 1fr) [full-end];
+  }
+
+  @media only screen and (max-width: $bp-medium) {
+    /*
+      Add a new row to put realtors under the header;
+      make header fill up the entire viewport except for the sidebar height;
+      make the content to dictate the size of the story-content row. This is default behavior for rows, so we can get rid of the min-contents declarations;
+    */
+
+    grid-template-rows: 6rem calc(100vh - 6rem);
+  }
+}
