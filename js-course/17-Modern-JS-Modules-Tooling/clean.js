@@ -1,5 +1,7 @@
 'use strict';
 
+// arrays are objects
+// freezes the first level of the object
 const budget = Object.freeze([
   { value: 250, description: 'Sold old TV 📺', user: 'jonas' },
   { value: -45, description: 'Groceries 🥑', user: 'jonas' },
@@ -11,17 +13,16 @@ const budget = Object.freeze([
   { value: -1800, description: 'New Laptop 💻', user: 'jonas' },
 ]);
 
-// budget[0].value = 10000; // works, only the first level is freezed
-// budget[9] = 'entry'; // error
-
+// make immutable
 const spendingLimits = Object.freeze({
   jonas: 1500,
   matilda: 100,
 });
+// spendingLimits.jay = 200; // error
 
-// spendingLimits.jay = 100; // error
-
-const getLimit = (limits, user) => limits?.[user] ?? 0;
+// const limit = spendingLimits[user] ? spendingLimits[user] : 0;
+// const limit = spendingLimits[user] || 0;
+const getLimit = (user, limits) => limits?.[user] ?? 0;
 
 // Pure function
 const addExpense = function (
@@ -33,7 +34,8 @@ const addExpense = function (
 ) {
   const cleanUser = user.toLowerCase();
 
-  return value <= getLimit(limits, cleanUser)
+  // return new state, instead of changing it
+  return value <= getLimit(cleanUser, limits)
     ? [...state, { value: -value, description, user: cleanUser }]
     : state;
 };
@@ -48,30 +50,30 @@ const newBudget2 = addExpense(
 const newBudget3 = addExpense(newBudget2, spendingLimits, 200, 'Stuff', 'Jay');
 
 // const checkExpenses = function (state, limits) {
-//   return state.map(entry => {
-//     return entry.value < -getLimit(limits, entry.user)
+//   return state.map(entry =>
+//     entry.value < -getLimit(entry.user, limits)
 //       ? { ...entry, flag: 'limit' }
-//       : entry;
-//   });
+//       : entry
+//   );
 // };
+
 const checkExpenses = (state, limits) =>
   state.map(entry =>
-    entry.value < -getLimit(limits, entry.user)
+    entry.value < -getLimit(entry.user, limits)
       ? { ...entry, flag: 'limit' }
       : entry
   );
+
 const finalBudget = checkExpenses(newBudget3, spendingLimits);
 console.log(finalBudget);
 
-// Impure
 const logBigExpenses = function (state, bigLimit) {
   const bigExpenses = state
     .filter(entry => entry.value <= -bigLimit)
-    .map(entry => entry.description.slice(-2))
+    .map(entry => entry.description.slice(-2)) // emojis are 2 chars
     .join(' / ');
-  // .reduce((str, cur) => `${str} / ${cur.description.slice(-2)}`, '');
-
-  console.log(bigExpenses); // side effect
+  // .reduce((str, cur) => `${str} ${cur.description.slice(-2)}`, '');
+  console.log(bigExpenses);
 };
 
-logBigExpenses(finalBudget, 1000);
+logBigExpenses(finalBudget, 500);
