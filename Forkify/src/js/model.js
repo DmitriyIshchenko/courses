@@ -1,3 +1,6 @@
+import { API_URL } from './config';
+import { getJSON } from './helpers';
+
 /* 
 exports are not copies but a live connection -> 
 state is also going to be updated in the controller
@@ -9,12 +12,8 @@ export const state = {
 // get the data and change state (will return a promise)
 export const loadRecipe = async function (id) {
   try {
-    const res = await fetch(
-      `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
-    );
-    const data = await res.json();
-
-    if (!res.ok) throw new Error(`${data.message} (${res.status})`);
+    // get data
+    const data = await getJSON(`${API_URL}${id}`);
 
     const { recipe } = data.data;
     // format data
@@ -30,6 +29,7 @@ export const loadRecipe = async function (id) {
     };
     console.log(state.recipe);
   } catch (err) {
-    alert(err);
+    // temp error handling
+    console.error(`ERROR!!! ${err.message}`);
   }
 };
