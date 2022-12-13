@@ -27,6 +27,23 @@ class RecipeView {
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  /* // ANCHOR[id=publisher] - PUBLISHER
+    We want to handle events in the controller, 
+  because otherwise we would have application logic in the view.
+    On the other hand, we want to listen for the events in the view,
+  because otherwise we would need DOM elements and presentation logic in the controller,
+  which stands against the idea of our MVC implementation.
+    So event listeners should be attached to DOM elements in the view, 
+  but the events should be handled in the controller (publisher-subscriber pattern)
+
+    Subscriber: // LINK ../controller.js#subscriber
+  */
+  addHandlerRender(handler) {
+    // hashchange - listen for hash changing to render corresponding recipe
+    // load - render recipe on page load
+    ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
+  }
+
   #clear() {
     this.#parentElement.innerHTML = '';
   }

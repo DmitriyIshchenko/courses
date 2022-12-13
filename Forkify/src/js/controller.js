@@ -4,12 +4,6 @@ import 'regenerator-runtime/runtime';
 import * as model from './model';
 import recipeView from './views/recipeView';
 
-const recipeContainer = document.querySelector('.recipe');
-
-// https://forkify-api.herokuapp.com/v2
-
-///////////////////////////////////////
-
 const controlRecipes = async function () {
   try {
     // get id from the url hash
@@ -31,12 +25,18 @@ const controlRecipes = async function () {
   }
 };
 
-// listen for hash changing to render corresponding recipe
-// window.addEventListener('hashchange', controlRecipes);
-// render recipe on page load
-// window.addEventListener('load', controlRecipes);
+/* // ANCHOR[id=subscriber] - SUBSCRIBER
+    We want to handle events in the controller, 
+  because otherwise we would have application logic in the view.
+    On the other hand, we want to listen for the events in the view,
+  because otherwise we would need DOM elements and presentation logic in the controller,
+  which stands against the idea of our MVC implementation.
+    So event listeners should be attached to DOM elements in the view, 
+  but the events should be handled in the controller (publisher-subscriber pattern)
 
-// w/o duplicated code
-['hashchange', 'load'].forEach(ev =>
-  window.addEventListener(ev, controlRecipes)
-);
+  Publisher -> // LINK ./views/recipeView.js#publisher
+  */
+const init = function () {
+  recipeView.addHandlerRender(controlRecipes);
+};
+init();
