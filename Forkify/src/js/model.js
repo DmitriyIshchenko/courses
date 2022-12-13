@@ -29,7 +29,7 @@ export const loadRecipe = async function (id) {
     };
     console.log(state.recipe);
   } catch (err) {
-    // temp error handling
-    console.error(`ERROR!!! ${err.message}`);
+    // re-throw error to handle it in controller
+    throw err;
   }
 };
