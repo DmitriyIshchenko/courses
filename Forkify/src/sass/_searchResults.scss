@@ -25,6 +25,9 @@
     }
     &--next {
       float: right;
+      svg {
+        order: 1;
+      }
     }
   }
 }
