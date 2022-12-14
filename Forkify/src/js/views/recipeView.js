@@ -8,21 +8,27 @@ class RecipeView extends View {
   _errorMessage = 'We could not find that recipe. Please try another one!';
   _message = '';
 
-  /* // ANCHOR[id=publisher] - PUBLISHER
-    We want to handle events in the controller, 
-  because otherwise we would have application logic in the view.
-    On the other hand, we want to listen for the events in the view,
-  because otherwise we would need DOM elements and presentation logic in the controller,
-  which stands against the idea of our MVC implementation.
-    So event listeners should be attached to DOM elements in the view, 
-  but the events should be handled in the controller (publisher-subscriber pattern)
-
+  /* // ANCHOR[id=publisher] - PUBLISHERS
     Subscriber: // LINK ../controller.js#subscriber
   */
   addHandlerRender(handler) {
     // hashchange - listen for hash changing to render corresponding recipe
     // load - render recipe on page load
     ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
+  }
+
+  addHandlerUpdateServings(handler) {
+    // event delegation
+    this._parentElement.addEventListener('click', function (e) {
+      // closest() searches up in the tree for parents (opposite of querySelector())
+      const btn = e.target.closest('.btn--update-servings');
+      if (!btn) return;
+
+      // use data attribute to read the old servings
+      const { updateTo } = btn.dataset;
+
+      if (updateTo > 0) handler(+updateTo);
+    });
   }
 
   _generateMarkup() {
@@ -56,12 +62,16 @@ class RecipeView extends View {
           <span class="recipe__info-text">servings</span>
 
           <div class="recipe__info-buttons">
-            <button class="btn--tiny btn--increase-servings">
+            <button class="btn--tiny btn--update-servings" data-update-to=${
+              this._data.servings - 1
+            }>
               <svg>
                 <use href="${icons}#icon-minus-circle"></use>
               </svg>
             </button>
-            <button class="btn--tiny btn--increase-servings">
+            <button class="btn--tiny btn--update-servings" data-update-to=${
+              this._data.servings + 1
+            }>
               <svg>
                 <use href="${icons}#icon-plus-circle"></use>
               </svg>

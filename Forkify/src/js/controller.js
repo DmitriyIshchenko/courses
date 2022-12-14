@@ -8,9 +8,9 @@ import resultsView from './views/resultsView';
 import paginationView from './views/paginationView';
 
 // parcel hot module reloading
-// if (module.hot) {
-//   module.hot.accept();
-// }
+if (module.hot) {
+  module.hot.accept();
+}
 
 const controlRecipes = async function () {
   try {
@@ -65,6 +65,14 @@ const controlPagination = function (goToPage) {
   paginationView.render(model.state.search);
 };
 
+const controlServings = function (newServings) {
+  // Update the recipe servings (in state)
+  model.updateServings(newServings);
+
+  // Update the recipe view
+  recipeView.render(model.state.recipe);
+};
+
 /* // ANCHOR[id=subscriber] - SUBSCRIBER
     We want to handle events in the controller, 
   because otherwise we would have application logic in the view.
@@ -82,6 +90,7 @@ const controlPagination = function (goToPage) {
   */
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
+  recipeView.addHandlerUpdateServings(controlServings);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 };
