@@ -21,6 +21,9 @@ const controlRecipes = async function () {
     if (!id) return;
     recipeView.renderSpinner();
 
+    // 0. Update the result view to mark selected recipe
+    resultsView.update(model.getSearchResultPage());
+
     // 1. Loading recipe from the API
     // (manipulates the state, doesn't return actual data, but returns a promise)
     await model.loadRecipe(id);
