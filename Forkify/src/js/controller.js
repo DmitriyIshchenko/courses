@@ -5,11 +5,12 @@ import * as model from './model';
 import recipeView from './views/recipeView';
 import searchView from './views/searchView';
 import resultsView from './views/resultsView';
+import paginationView from './views/paginationView';
 
 // parcel hot module reloading
-if (module.hot) {
-  module.hot.accept();
-}
+// if (module.hot) {
+//   module.hot.accept();
+// }
 
 const controlRecipes = async function () {
   try {
@@ -43,12 +44,25 @@ const controlSearchResults = async function () {
     // also doesn't return any data, but manipulates the state
     await model.loadSearchResults(query);
 
-    //3. Render results
-    resultsView.render(model.state.search.results);
+    // 3. Render results
+    // resultsView.render(model.state.search.results); // render all results
+    resultsView.render(model.getSearchResultPage());
+
+    // 4. Render initial pagination buttons
+    // (pass the entire search object in order to calculate which buttons to render)
+    paginationView.render(model.state.search);
   } catch (err) {
     console.log(err);
     resultsView.renderError();
   }
+};
+
+const controlPagination = function (goToPage) {
+  // 1. Render NEW results
+  resultsView.render(model.getSearchResultPage(goToPage));
+
+  // 2. Render NEW pagination buttons
+  paginationView.render(model.state.search);
 };
 
 /* // ANCHOR[id=subscriber] - SUBSCRIBER
@@ -63,9 +77,12 @@ const controlSearchResults = async function () {
   Publishers:
   // LINK ./views/recipeView.js#publisher
   // LINK ./views/searchView.js#publisher
+  // LINK ./views/paginationView.js#publisher
+  // and so on
   */
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 };
 init();
