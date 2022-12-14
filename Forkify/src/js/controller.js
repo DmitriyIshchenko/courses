@@ -69,8 +69,8 @@ const controlServings = function (newServings) {
   // Update the recipe servings (in state)
   model.updateServings(newServings);
 
-  // Update the recipe view
-  recipeView.render(model.state.recipe);
+  // NOTE - only update text and attributes in the DOM w/o having to re-render the entire view
+  recipeView.update(model.state.recipe);
 };
 
 /* // ANCHOR[id=subscriber] - SUBSCRIBER
