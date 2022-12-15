@@ -13,6 +13,7 @@ export const state = {
     page: 1,
     resultsPerPage: RES_PER_PAGE,
   },
+  bookmarks: [],
 };
 
 // get the data and change state (will return a promise)
@@ -22,7 +23,7 @@ export const loadRecipe = async function (id) {
     const data = await getJSON(`${API_URL}${id}`);
 
     const { recipe } = data.data;
-    // format data
+    // format data and conditionally add bookmarked property
     state.recipe = {
       id: recipe.id,
       title: recipe.title,
@@ -32,6 +33,9 @@ export const loadRecipe = async function (id) {
       servings: recipe.servings,
       cookingTime: recipe.cooking_time,
       ingredients: recipe.ingredients,
+      ...(state.bookmarks.some(bookmark => bookmark.id === id) && {
+        bookmarked: true,
+      }),
     };
   } catch (err) {
     // re-throw error to handle it in controller
@@ -88,4 +92,23 @@ export const updateServings = function (newServings) {
 
   // also update the servings in the state
   state.recipe.servings = newServings;
+};
+
+// BOOKMARKS
+
+export const addBookmark = function (recipe) {
+  // Add bookmark
+  state.bookmarks.push(recipe);
+
+  // Mark current recipe as bookmark
+  if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+};
+
+export const deleteBookmark = function (id) {
+  // Delete bookmark
+  const index = state.bookmarks.findIndex(bookmark => bookmark.id === id);
+  state.bookmarks.splice(index, 1);
+
+  // Mark current recipe as NOT bookmarked
+  if (id === state.recipe.id) state.recipe.bookmarked = false;
 };
