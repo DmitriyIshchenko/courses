@@ -9,7 +9,8 @@ export default class View {
   _data;
 
   // public API
-  render(data) {
+  // use render parameter to de
+  render(data, render = true) {
     // check if the data exists
 
     if (!data || (Array.isArray(data) && data.length === 0))
@@ -18,6 +19,9 @@ export default class View {
     this._data = data;
     // _generateMarkup is unique for each view
     const markup = this._generateMarkup();
+
+    // return markup for results and bookmark preview views
+    if (!render) return markup;
 
     this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
