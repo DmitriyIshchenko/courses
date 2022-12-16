@@ -1,5 +1,6 @@
 import { API_KEY, API_URL, RES_PER_PAGE } from './config';
-import { getJSON, sendJSON } from './helpers';
+// import { getJSON, sendJSON } from './helpers';
+import { AJAX } from './helpers';
 
 /* 
 exports are not copies but a live connection -> 
@@ -36,7 +37,7 @@ const createRecipeObject = function (data) {
 export const loadRecipe = async function (id) {
   try {
     // get data
-    const data = await getJSON(`${API_URL}${id}`);
+    const data = await AJAX(`${API_URL}${id}`);
 
     // format data and conditionally add bookmarked property
     state.recipe = createRecipeObject(data);
@@ -55,7 +56,7 @@ export const loadSearchResults = async function (query) {
     // reset page to default
     state.search.page = 1;
 
-    const data = await getJSON(`${API_URL}?search=${query}`);
+    const data = await AJAX(`${API_URL}?search=${query}`);
     state.search.results = data.data.recipes.map(rec => {
       return {
         id: rec.id,
@@ -177,7 +178,7 @@ export const uploadRecipe = async function (newRecipe) {
     };
 
     // create AJAX POST request
-    const data = await sendJSON(`${API_URL}?key=${API_KEY}`, recipe);
+    const data = await AJAX(`${API_URL}?key=${API_KEY}`, recipe);
     state.recipe = createRecipeObject(data);
 
     // always add user recipes to bookmarks
