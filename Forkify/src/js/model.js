@@ -37,7 +37,7 @@ const createRecipeObject = function (data) {
 export const loadRecipe = async function (id) {
   try {
     // get data
-    const data = await AJAX(`${API_URL}${id}`);
+    const data = await AJAX(`${API_URL}${id}?key=${API_KEY}`);
 
     // format data and conditionally add bookmarked property
     state.recipe = createRecipeObject(data);
@@ -56,13 +56,14 @@ export const loadSearchResults = async function (query) {
     // reset page to default
     state.search.page = 1;
 
-    const data = await AJAX(`${API_URL}?search=${query}`);
+    const data = await AJAX(`${API_URL}?search=${query}&key=${API_KEY}`);
     state.search.results = data.data.recipes.map(rec => {
       return {
         id: rec.id,
         title: rec.title,
         publisher: rec.publisher,
         image: rec.image_url,
+        ...(rec.key && { key: rec.key }),
       };
     });
   } catch (err) {
@@ -152,7 +153,7 @@ export const uploadRecipe = async function (newRecipe) {
     const ingredients = Object.entries(newRecipe)
       .filter(([key, value]) => key.startsWith('ingredient') && value !== '')
       .map(([key, value]) => {
-        const ingArr = value.replaceAll(' ', '').split(',');
+        const ingArr = value.split(',').map(ing => ing.trim());
 
         // we want exactly 3 items
         if (ingArr.length !== 3)
