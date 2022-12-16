@@ -7,6 +7,9 @@ import searchView from './views/searchView';
 import resultsView from './views/resultsView';
 import paginationView from './views/paginationView';
 import bookmarksView from './views/bookmarksView';
+import addRecipeView from './views/addRecipeView';
+import { MODAL_CLOSE_SEC } from './config';
+import { wait } from './helpers';
 
 // parcel hot module reloading
 if (module.hot) {
@@ -96,6 +99,39 @@ const controlAddBookmark = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlAddRecipe = async function (newRecipe) {
+  try {
+    // Render loading spinner
+    addRecipeView.renderSpinner();
+
+    // Upload new recipe data
+    await model.uploadRecipe(newRecipe);
+
+    // Render new recipe
+    recipeView.render(model.state.recipe);
+
+    // Display success message
+    addRecipeView.renderMessage();
+
+    // Rerender bookmarks view
+    bookmarksView.render(model.state.bookmarks);
+
+    // Change id in the url (w/o reloading the page)
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
+
+    // Close form after success
+    await wait(MODAL_CLOSE_SEC);
+    addRecipeView.toggle();
+
+    // reset form (wait for 1 second to avoid flickering while hiding form)
+    await wait(1);
+    addRecipeView.render('test');
+  } catch (err) {
+    console.error(err);
+    addRecipeView.renderError(err.message);
+  }
+};
+
 /* // ANCHOR[id=subscriber] - SUBSCRIBER
     We want to handle events in the controller, 
   because otherwise we would have application logic in the view.
@@ -118,5 +154,6 @@ const init = function () {
   recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+  addRecipeView.addHandlerUpload(controlAddRecipe);
 };
 init();

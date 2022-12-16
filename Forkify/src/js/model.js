@@ -1,5 +1,5 @@
-import { API_URL, RES_PER_PAGE } from './config';
-import { getJSON } from './helpers';
+import { API_KEY, API_URL, RES_PER_PAGE } from './config';
+import { getJSON, sendJSON } from './helpers';
 
 /* 
 exports are not copies but a live connection -> 
@@ -16,27 +16,33 @@ export const state = {
   bookmarks: [],
 };
 
+const createRecipeObject = function (data) {
+  const { recipe } = data.data;
+
+  return {
+    id: recipe.id,
+    title: recipe.title,
+    publisher: recipe.publisher,
+    sourceUrl: recipe.source_url,
+    image: recipe.image_url,
+    servings: recipe.servings,
+    cookingTime: recipe.cooking_time,
+    ingredients: recipe.ingredients,
+    ...(recipe.key && { key: recipe.key }),
+  };
+};
+
 // get the data and change state (will return a promise)
 export const loadRecipe = async function (id) {
   try {
     // get data
     const data = await getJSON(`${API_URL}${id}`);
 
-    const { recipe } = data.data;
     // format data and conditionally add bookmarked property
-    state.recipe = {
-      id: recipe.id,
-      title: recipe.title,
-      publisher: recipe.publisher,
-      sourceUrl: recipe.source_url,
-      image: recipe.image_url,
-      servings: recipe.servings,
-      cookingTime: recipe.cooking_time,
-      ingredients: recipe.ingredients,
-      ...(state.bookmarks.some(bookmark => bookmark.id === id) && {
-        bookmarked: true,
-      }),
-    };
+    state.recipe = createRecipeObject(data);
+
+    if (state.bookmarks.some(bookmark => bookmark.id === id))
+      state.recipe.bookmarked = true;
   } catch (err) {
     // re-throw error to handle it in controller
     throw err;
@@ -134,4 +140,51 @@ init();
 // for debugging
 const clearBookmarks = function () {
   localStorage.clear('bookmarks');
+};
+// clearBookmarks();
+
+// UPLOADING USER RECIPES
+
+export const uploadRecipe = async function (newRecipe) {
+  try {
+    // transform the data to appropriate format
+    const ingredients = Object.entries(newRecipe)
+      .filter(([key, value]) => key.startsWith('ingredient') && value !== '')
+      .map(([key, value]) => {
+        const ingArr = value.replaceAll(' ', '').split(',');
+
+        // we want exactly 3 items
+        if (ingArr.length !== 3)
+          throw new Error(
+            'Wrong ingredient format! Please use the correct format!'
+          );
+
+        const [quantity, unit, description] = ingArr;
+        return {
+          quantity: +quantity || null,
+          unit,
+          description,
+        };
+      });
+    const recipe = {
+      title: newRecipe.title,
+      source_url: newRecipe.sourceUrl,
+      image_url: newRecipe.image,
+      publisher: newRecipe.publisher,
+      cooking_time: +newRecipe.cookingTime,
+      servings: +newRecipe.servings,
+      ingredients,
+    };
+
+    // create AJAX POST request
+    const data = await sendJSON(`${API_URL}?key=${API_KEY}`, recipe);
+    state.recipe = createRecipeObject(data);
+
+    // always add user recipes to bookmarks
+    addBookmark(state.recipe);
+    console.log(state.recipe);
+  } catch (err) {
+    // re-throw error
+    throw err;
+  }
 };

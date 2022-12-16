@@ -9,10 +9,37 @@ const timeout = function (s) {
   });
 };
 
+export const wait = async sec =>
+  new Promise(resolve => setTimeout(resolve, sec * 1000));
+
 export const getJSON = async function (url) {
   try {
     // will throw error if the fetch doesn't settle within the specified time
     const res = await Promise.race([fetch(url), timeout(TIMEOUT_SEC)]);
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(`${data.message} (${res.status})`);
+
+    // data is the resolved value of promise that getJSON() returns
+    return data;
+  } catch (err) {
+    // re-throw error, because otherwise fulfilled promise will be returned
+    throw err;
+  }
+};
+
+export const sendJSON = async function (url, uploadData) {
+  try {
+    // will throw error if the fetch doesn't settle within the specified time
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(uploadData),
+    };
+
+    const res = await Promise.race([fetch(url, options), timeout(TIMEOUT_SEC)]);
     const data = await res.json();
 
     if (!res.ok) throw new Error(`${data.message} (${res.status})`);
