@@ -6,6 +6,11 @@ class BookmarksView extends View {
   _errorMessage = 'No bookmarks yet. Find a nice recipe and bookmark it!';
   _message = '';
 
+  addHandlerRender(handler) {
+    // render bookmarks on page load
+    window.addEventListener('load', handler);
+  }
+
   _generateMarkup() {
     /* We can't just call generateMarkup(), because we need to set the data,
       so we should use render(), but it will try to insert that markup in the page.

@@ -34,6 +34,7 @@ const controlRecipes = async function () {
     recipeView.render(model.state.recipe);
   } catch (err) {
     recipeView.renderError();
+    console.error(err);
   }
 };
 
@@ -57,7 +58,7 @@ const controlSearchResults = async function () {
     // (pass the entire search object in order to calculate which buttons to render)
     paginationView.render(model.state.search);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     resultsView.renderError();
   }
 };
@@ -76,6 +77,10 @@ const controlServings = function (newServings) {
 
   // NOTE - only update text and attributes in the DOM w/o having to re-render the entire view
   recipeView.update(model.state.recipe);
+};
+
+const controlBookmarks = function () {
+  bookmarksView.render(model.state.bookmarks);
 };
 
 const controlAddBookmark = function () {
@@ -107,6 +112,7 @@ const controlAddBookmark = function () {
   // and so on
   */
 const init = function () {
+  bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
