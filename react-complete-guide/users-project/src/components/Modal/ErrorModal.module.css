@@ -1,0 +1,46 @@
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  width: 60%;
+  height: 30rem;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.header {
+  padding: 1.5rem;
+  background-color: #510674;
+
+  font-size: 3rem;
+  font-weight: 900;
+  color: #fff;
+}
+
+.message {
+  margin-top: 3rem;
+  margin-left: 1.5rem;
+}
+
+.popup button {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 2.5rem;
+}
