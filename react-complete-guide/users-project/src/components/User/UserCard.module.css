@@ -1,0 +1,15 @@
+.card {
+  background-color: #fff;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  list-style: none;
+  margin-inline: 1.5rem;
+}
+
+.card:first-child {
+  margin-top: 2.5rem;
+}
+
+.card:last-child {
+  margin-bottom: 2.5rem;
+}
