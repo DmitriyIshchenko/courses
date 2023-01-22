@@ -1,21 +1,26 @@
-.form {
-  display: grid;
-  margin: 3rem auto;
-  width: 50%;
-  padding: 1.5rem;
-
-  border-radius: 1rem;
-  background-color: #fff;
+.input {
+  margin: 2rem auto;
+  padding: 1rem;
+  width: 90%;
+  max-width: 40rem;
 }
 
-.form label {
-  font-weight: 900;
+.input label {
+  display: block;
+  font-weight: bold;
   margin-bottom: 0.5rem;
 }
 
-.form input {
-  /* height: 2.5rem; */
-  margin-bottom: 0.5rem;
+.input input {
+  font: inherit;
+  display: block;
+  width: 100%;
   border: 1px solid #ccc;
-  padding: 0.5rem 1rem;
+  padding: 0.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.input input:focus {
+  outline: none;
+  border-color: #4f005f;
 }

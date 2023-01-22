@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ErrorModal from "../Modal/ErrorModal";
 import Button from "../UI/Button";
+import Card from "../UI/Card";
 
 import styles from "./AddUserForm.module.css";
 const AddUserForm = (props) => {
@@ -39,18 +40,25 @@ const AddUserForm = (props) => {
 
   return (
     <div>
-      <form className={styles.form} onSubmit={userSubmitHandler}>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text"
-          value={username}
-          onChange={usernameChangeHandler}
-        />
-        <label htmlFor="age">Age</label>
-        <input id="age" type="text" value={age} onChange={ageChangeHandler} />
-        <Button type="submit">Add User</Button>
-      </form>
+      <Card className={styles.input}>
+        <form className={styles.form} onSubmit={userSubmitHandler}>
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            value={username}
+            onChange={usernameChangeHandler}
+          />
+          <label htmlFor="age">Age</label>
+          <input
+            id="age"
+            type="number"
+            value={age}
+            onChange={ageChangeHandler}
+          />
+          <Button type="submit">Add User</Button>
+        </form>
+      </Card>
       <ErrorModal error={error} onClosePopup={closePopupHandler} />
     </div>
   );
