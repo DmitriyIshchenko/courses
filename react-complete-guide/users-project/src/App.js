@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AddUserForm from "./components/AddUserForm/AddUserForm";
+import AddUserForm from "./components/User/AddUserForm";
 import UsersList from "./components/User/UsersList";
 
 function App() {
