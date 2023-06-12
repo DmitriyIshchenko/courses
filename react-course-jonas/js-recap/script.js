@@ -143,7 +143,7 @@ function getBook(id) {
   return data.find((d) => d.id === id);
 }
 
-//* ANCHOR - Destructuring
+//SECTION - Destructuring
 
 const book = getBook(1);
 console.log(book);
@@ -160,8 +160,9 @@ console.log(author, title, genres);
 
 const [primaryGenre, secondaryGenre, ...otherGenres] = genres;
 console.log(primaryGenre, secondaryGenre, otherGenres);
+//!SECTION
 
-//* ANCHOR - Rest/spread operator
+//SECTION - Rest/spread operator
 //* Rest - left side, Spread - right side
 
 // Array example
@@ -177,3 +178,13 @@ const updatedBook = {
   pages: 1210,
 };
 console.log(updatedBook);
+//!SECTION
+
+//SECTION Template literals
+
+const summary = `${title}, a ${pages}-page long book, was written by ${author} and published in ${
+  publicationDate.split("-")[0]
+}`;
+console.log(summary);
+
+//!SECTION
