@@ -145,7 +145,7 @@ function getBook(id) {
 
 //SECTION - Destructuring
 
-const book = getBook(1);
+const book = getBook(2);
 console.log(book);
 
 // const title = book.title;
@@ -160,7 +160,7 @@ console.log(author, title, genres);
 
 const [primaryGenre, secondaryGenre, ...otherGenres] = genres;
 console.log(primaryGenre, secondaryGenre, otherGenres);
-//!SECTION
+// !SECTION
 
 //SECTION - Rest/spread operator
 //* Rest - left side, Spread - right side
@@ -206,5 +206,45 @@ console.log(summary);
 const pagesRange = pages > 1000 ? "over a thousand" : "less than 1000";
 console.log(pagesRange);
 console.log(`The book has ${pagesRange} pages`);
+
+//!SECTION
+
+//SECTION - Short-circuiting and logical operators
+
+//* AND
+// short-circuits whenever the first operator is false and returns it
+console.log(true && "Some string");
+console.log(false && "Some string");
+console.log(hasMovieAdaptation && "This book has a movie");
+
+// falsy values: 0, '', null, undefined
+
+// use case: instead of IF operator
+console.log("jonas" && "some string");
+console.log(0 && "some string");
+
+//* OR - the opposite of AND
+// short-circuits whenever the first operator is true and returns it
+
+console.log(true || "some string");
+console.log(false || "some string");
+
+// use case: set default values
+console.log(book.translations.spanish);
+const spanishTranslation = book.translations.spanish || "NOT TRANSLATED";
+
+console.log(spanishTranslation);
+
+// pitfall
+console.log(book.reviews.librarything.reviewsCount);
+const countWrong = book.reviews.librarything.reviewsCount || "no data";
+
+// we want it to be 0 instead of 'no data'
+console.log(countWrong);
+
+//* Nullish coalescing operator - solution
+// return the second value when the first value is null or undefined, but not if it's 0 or ""
+const count = book.reviews.librarything.reviewsCount ?? "no-data";
+console.log(count);
 
 //!SECTION
