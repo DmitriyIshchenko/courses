@@ -160,3 +160,20 @@ console.log(author, title, genres);
 
 const [primaryGenre, secondaryGenre, ...otherGenres] = genres;
 console.log(primaryGenre, secondaryGenre, otherGenres);
+
+//* ANCHOR - Rest/spread operator
+//* Rest - left side, Spread - right side
+
+// Array example
+const newGenres = ["epic fantasy", ...genres];
+console.log(newGenres);
+
+// Object example
+const updatedBook = {
+  ...book,
+  // Adding a new property
+  moviePublicationDate: "2001-12-19",
+  // Overwriting an existing property (have to be after spread object)
+  pages: 1210,
+};
+console.log(updatedBook);
