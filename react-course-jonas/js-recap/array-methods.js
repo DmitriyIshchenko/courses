@@ -183,3 +183,11 @@ const adventureBooks = books
   .map((book) => book.title);
 adventureBooks;
 //!SECTION
+
+//SECTION - reduce() method
+// reduce array to single value
+
+const pagesAllBooks = books.reduce((sum, book) => sum + book.pages, 0);
+pagesAllBooks;
+
+//!SECTION
