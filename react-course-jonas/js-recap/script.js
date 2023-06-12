@@ -145,7 +145,7 @@ function getBook(id) {
 
 //SECTION - Destructuring
 
-const book = getBook(2);
+const book = getBook(1);
 console.log(book);
 
 // const title = book.title;
@@ -246,5 +246,18 @@ console.log(countWrong);
 // return the second value when the first value is null or undefined, but not if it's 0 or ""
 const count = book.reviews.librarything.reviewsCount ?? "no-data";
 console.log(count);
+
+//!SECTION
+
+//SECTION - Optional chaining
+
+function getTotalReviewCount(book) {
+  const goodreads = book.reviews?.goodreads.reviewsCount ?? 0;
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+
+  return goodreads + librarything;
+}
+
+console.log(getTotalReviewCount(book));
 
 //!SECTION
