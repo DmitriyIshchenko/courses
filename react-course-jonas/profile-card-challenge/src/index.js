@@ -22,7 +22,17 @@ function Avatar(props) {
 }
 
 function Intro() {
-  return <div></div>;
+  return (
+    <div>
+      <h1>Dmitry Ishchenko</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus sed
+        doloremque repellat ratione suscipit enim repudiandae! Sint tempora vel,
+        sed exercitationem reiciendis eaque aut rem cum omnis? Voluptatum, fuga
+        accusamus.
+      </p>
+    </div>
+  );
 }
 
 function SkillList() {
