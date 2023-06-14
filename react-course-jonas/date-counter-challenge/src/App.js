@@ -25,6 +25,12 @@ function Counter() {
     setCount((c) => c + step);
   };
 
+  const getDateFromNow = () => {
+    const date = new Date();
+    date.setDate(date.getDate() + count);
+    return date.toDateString();
+  };
+
   return (
     <div className="counter">
       <div>
@@ -38,6 +44,10 @@ function Counter() {
         <span>Count: {count}</span>
         <button onClick={handleIncreaseCount}>+</button>
       </div>
+
+      <p>
+        {count > 0 ? `${count} days from today` : "Today"} is {getDateFromNow()}
+      </p>
     </div>
   );
 }
