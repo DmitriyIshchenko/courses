@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import "./styles.css";
 
 export default function App() {
@@ -37,11 +39,27 @@ const questions = [
   {
     id: 2002,
     question:
-      "What do we call an input element that is completely synchronised with state?",
+      "What do we call an input element that is completely synchronized with state?",
     answer: "Controlled element",
   },
 ];
 
 function FlashCards() {
-  return <div>TODO</div>;
+  const [selectedId, setSelectedId] = useState(null);
+
+  return (
+    <div className="flashcards">
+      {questions.map((question) => (
+        <div
+          key={question.id}
+          className={selectedId === question.id ? "selected" : ""}
+          onClick={() => setSelectedId(question.id)}
+        >
+          <p>
+            {selectedId === question.id ? question.answer : question.question}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
 }
