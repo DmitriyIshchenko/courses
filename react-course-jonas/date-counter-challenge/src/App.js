@@ -19,16 +19,21 @@ function Counter() {
     setStep((s) => s + 1);
   };
   const handleDecreaseCount = () => {
-    if (count >= step) setCount((c) => c - step);
+    setCount((c) => c - step);
   };
   const handleIncreaseCount = () => {
     setCount((c) => c + step);
   };
 
-  const getDateFromNow = () => {
+  const getDateString = () => {
     const date = new Date();
     date.setDate(date.getDate() + count);
-    return date.toDateString();
+
+    let str = "Today is";
+    if (count > 0) str = `${count} days from now is`;
+    if (count < 0) str = `${Math.abs(count)} days ago was`;
+
+    return `${str} ${date.toDateString()}`;
   };
 
   return (
@@ -45,9 +50,7 @@ function Counter() {
         <button onClick={handleIncreaseCount}>+</button>
       </div>
 
-      <p>
-        {count > 0 ? `${count} days from today` : "Today"} is {getDateFromNow()}
-      </p>
+      <p>{getDateString()}</p>
     </div>
   );
 }
