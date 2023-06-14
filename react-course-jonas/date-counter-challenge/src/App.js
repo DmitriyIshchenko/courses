@@ -24,6 +24,10 @@ function Counter() {
   const handleIncreaseCount = () => {
     setCount((c) => c + step);
   };
+  const handleReset = () => {
+    setCount(0);
+    setStep(1);
+  };
 
   const getDateString = () => {
     const date = new Date();
@@ -67,6 +71,10 @@ function Counter() {
       </div>
 
       <p>{getDateString()}</p>
+
+      {step !== 1 || count !== 0 ? (
+        <button onClick={handleReset}>Reset</button>
+      ) : null}
     </div>
   );
 }
