@@ -12,12 +12,12 @@ function Counter() {
   const [step, setStep] = useState(1);
   const [count, setCount] = useState(0);
 
-  const handleDecreaseStep = () => {
-    if (step > 1) setStep((s) => s - 1);
-  };
-  const handleIncreaseStep = () => {
-    setStep((s) => s + 1);
-  };
+  // const handleDecreaseStep = () => {
+  //   if (step > 1) setStep((s) => s - 1);
+  // };
+  // const handleIncreaseStep = () => {
+  //   setStep((s) => s + 1);
+  // };
   const handleDecreaseCount = () => {
     setCount((c) => c - step);
   };
@@ -39,14 +39,30 @@ function Counter() {
   return (
     <div className="counter">
       <div>
-        <button onClick={handleDecreaseStep}>-</button>
+        <input
+          value={step}
+          onChange={(e) => {
+            setStep(+e.target.value);
+          }}
+          type="range"
+          min="0"
+          max="10"
+        />
+        {step}
+        {/* <button onClick={handleDecreaseStep}>-</button>
         <span>Step: {step}</span>
-        <button onClick={handleIncreaseStep}>+</button>
+        <button onClick={handleIncreaseStep}>+</button> */}
       </div>
 
       <div>
         <button onClick={handleDecreaseCount}>-</button>
-        <span>Count: {count}</span>
+        {/* <span>Count: {count}</span> */}
+
+        <input
+          type="text"
+          value={count}
+          onChange={(e) => setCount(+e.target.value)}
+        />
         <button onClick={handleIncreaseCount}>+</button>
       </div>
 
