@@ -1,20 +1,28 @@
+import { useState } from "react";
+
 export default function App() {
+  const [bill, setBill] = useState(0);
+
   return (
     <div className="App">
-      <BillInput />
+      <BillInput bill={bill} onChange={setBill} />
       <TipInput></TipInput>
       <TipInput></TipInput>
-      <Output />
+      <Output bill={bill} />
       <ResetButton />
     </div>
   );
 }
 
-function BillInput() {
+function BillInput({ bill, onChange }) {
   return (
     <div>
       <span>How much was the bill?</span>
-      <input type="text" />
+      <input
+        type="text"
+        value={bill}
+        onChange={(e) => onChange(+e.target.value)}
+      />
     </div>
   );
 }
@@ -31,8 +39,8 @@ function TipInput() {
     </div>
   );
 }
-function Output() {
-  return <h2>You pay X ($Y + $Z tip)</h2>;
+function Output({ bill }) {
+  return <h2>You pay X (${bill} + $Z tip)</h2>;
 }
 function ResetButton() {
   return <button>Reset</button>;
