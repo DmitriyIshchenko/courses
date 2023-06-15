@@ -14,7 +14,7 @@ export default function App() {
       <TipInput tip={friendTip} onChange={setFriendTip}>
         <span>How did your friend like the service?</span>
       </TipInput>
-      <Output bill={bill} />
+      <Output bill={bill} userTip={userTip} friendTip={friendTip} />
       <ResetButton />
     </div>
   );
@@ -45,8 +45,15 @@ function TipInput({ tip, onChange, children }) {
     </div>
   );
 }
-function Output({ bill }) {
-  return <h2>You pay X (${bill} + $Z tip)</h2>;
+function Output({ bill, userTip, friendTip }) {
+  const avgTip = (userTip + friendTip) / 2 / 100;
+  const totalTip = bill * avgTip;
+  const totalBill = bill + totalTip;
+  return (
+    <h2>
+      You pay ${totalBill} (${bill} + ${totalTip} tip)
+    </h2>
+  );
 }
 function ResetButton() {
   return <button>Reset</button>;
