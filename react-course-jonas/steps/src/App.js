@@ -39,21 +39,35 @@ export default function App() {
           </p>
 
           <div className="buttons">
-            <button
-              style={{ backgroundColor: "#7950f2", color: "#fff" }}
+            <Button
+              bgColor="#7950f2"
+              textColor="#fff"
               onClick={handlePrevious}
-            >
-              Previous
-            </button>
-            <button
-              style={{ backgroundColor: "#7950f2", color: "#fff" }}
+              text="Previous"
+              emoji="👈️"
+            />
+            <Button
+              bgColor="#7950f2"
+              textColor="#fff"
               onClick={handleNext}
-            >
-              Next
-            </button>
+              text="Next"
+              emoji="👉️"
+            />
           </div>
         </div>
       )}
     </>
+  );
+}
+
+function Button({ textColor, bgColor, onClick, text, emoji }) {
+  return (
+    <button
+      onClick={onClick}
+      style={{ backgroundColor: bgColor, color: textColor }}
+    >
+      <span>{emoji}</span>
+      {text}
+    </button>
   );
 }
