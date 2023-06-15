@@ -129,6 +129,7 @@ form {
 
 label {
   font-weight: 500;
+  display: flex;
 }
 
 label::first-letter {
@@ -147,6 +148,7 @@ select {
   border: 1px solid var(--color-light);
   border-radius: 4px;
   transition: 0.3s;
+  width: 100%;
 }
 
 input:focus,
