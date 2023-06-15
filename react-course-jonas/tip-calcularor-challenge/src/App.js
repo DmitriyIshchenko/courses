@@ -5,6 +5,12 @@ export default function App() {
   const [userTip, setUserTip] = useState(0);
   const [friendTip, setFriendTip] = useState(0);
 
+  function handleReset() {
+    setBill(0);
+    setUserTip(0);
+    setFriendTip(0);
+  }
+
   return (
     <div className="App">
       <BillInput bill={bill} onChange={setBill} />
@@ -15,7 +21,7 @@ export default function App() {
         <span>How did your friend like the service?</span>
       </TipInput>
       <Output bill={bill} userTip={userTip} friendTip={friendTip} />
-      <ResetButton />
+      <ResetButton onClick={handleReset} />
     </div>
   );
 }
@@ -55,6 +61,6 @@ function Output({ bill, userTip, friendTip }) {
     </h2>
   );
 }
-function ResetButton() {
-  return <button>Reset</button>;
+function ResetButton({ onClick }) {
+  return <button onClick={onClick}>Reset</button>;
 }
