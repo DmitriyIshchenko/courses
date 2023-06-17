@@ -50,7 +50,13 @@ function TextExpander({
     setIsExpanded((open) => !open);
   }
 
-  const btnStyle = { color: buttonColor };
+  const btnStyle = {
+    color: buttonColor,
+    marginLeft: "5px",
+    border: "none",
+    backgroundColor: "transparent",
+    cursor: "pointer",
+  };
   return (
     <div className={className}>
       {isExpanded
