@@ -105,8 +105,9 @@ const initialProgram = [
 ];
 
 const initialSession = [
-  { name: "pushups", sets: 1, reps: 50 },
-  { name: "leg raises", sets: 1, reps: 30 },
+  { name: "pushups", reps: 50 },
+  { name: "pushups", reps: 50 },
+  { name: "leg raises", reps: 30 },
 ];
 
 export default function App() {
@@ -119,7 +120,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <SessionGoal program={program} />
+      <SessionGoal program={program} exercises={sessionLog} />
       <SessionLog exercises={sessionLog} />
       <FormAddExercise program={program} onAddExercise={handleAddExercise} />
     </div>
@@ -141,24 +142,62 @@ function SessionLog({ exercises }) {
   );
 }
 
-function SessionGoal({ program }) {
-  const todayGoal = program[new Date().getDay()];
+function SessionGoal({ program, exercises }) {
+  const todayProgram = program[new Date().getDay()];
+
+  if (todayProgram.isRestDay) {
+    return (
+      <div>
+        <h2>Today's goal:</h2>
+        <p>Rest!</p>
+      </div>
+    );
+  }
+
+  const performed = exercises.reduce(
+    (acc, exercise) => ({
+      ...acc,
+      [exercise.name]: acc[exercise.name] + exercise.reps || exercise.reps,
+    }),
+    {}
+  );
+
+  const goal = todayProgram.exercises.reduce(
+    (acc, exercise) => ({
+      ...acc,
+      [exercise.name]:
+        (acc[exercise.name] += exercise.sets * exercise.reps) ||
+        exercise.sets * exercise.reps,
+    }),
+    {}
+  );
+
+  const percentage = Math.floor(
+    Object.keys(goal)
+      .map((exercise) => (performed[exercise] / goal[exercise]) * 100 || 0)
+      .reduce((acc, cur, _, arr) => acc + cur / arr.length, 0)
+  );
+
+  const message =
+    percentage === 0
+      ? "Let's start exercising!"
+      : percentage < 100
+      ? `You have accomplished ${percentage}% of today's goal! Keep it up!`
+      : "You accomplished today's goal! Good job!";
 
   return (
     <div>
       <h2>Today's goal:</h2>
 
-      {todayGoal.isRestDay ? (
-        <p>Rest day!</p>
-      ) : (
-        <ul>
-          {todayGoal.exercises.map((exercise) => (
-            <li key={exercise.name}>
-              {`${exercise.name} ${exercise.sets}x${exercise.reps}`}
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul>
+        {todayProgram.exercises.map((exercise) => (
+          <li key={exercise.name}>
+            {`${exercise.name} ${exercise.sets}x${exercise.reps}`}
+          </li>
+        ))}
+      </ul>
+
+      <p>{message}</p>
     </div>
   );
 }
