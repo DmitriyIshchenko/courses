@@ -1,4 +1,6 @@
-const initilalProgram = [
+import { useState } from "react";
+
+const initialProgram = [
   {
     day: "monday",
     isRestDay: false,
@@ -108,10 +110,12 @@ const initialSession = [
 ];
 
 export default function App() {
+  const [sessionLog, setSessionLog] = useState(initialSession);
+
   return (
     <div className="App">
       <SessionGoal />
-      <SessionLog />
+      <SessionLog exercises={sessionLog} />
       <FormAddExercise />
     </div>
   );
@@ -130,14 +134,25 @@ function SessionLog() {
 }
 
 function SessionGoal() {
+  const [program, setProgram] = useState(initialProgram);
+
+  const todayGoal = program[new Date().getDay()];
+
   return (
     <div>
       <h2>Today's goal:</h2>
 
-      <ul>
-        <li>Pushups: 3x50</li>
-        <li>Leg raises: 3x30</li>
-      </ul>
+      {todayGoal.isRestDay ? (
+        <p>Rest day!</p>
+      ) : (
+        <ul>
+          {todayGoal.exercises.map((exercise) => (
+            <li key={exercise.exercise}>
+              {`${exercise.exercise} ${exercise.sets}x${exercise.reps}`}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
