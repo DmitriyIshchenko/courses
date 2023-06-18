@@ -6,12 +6,12 @@ const initialProgram = [
     isRestDay: false,
     exercises: [
       {
-        exercise: "pushups",
+        name: "pushups",
         sets: 3,
         reps: 50,
       },
       {
-        exercise: "leg raises",
+        name: "leg raises",
         sets: 3,
         reps: 30,
       },
@@ -22,12 +22,12 @@ const initialProgram = [
     isRestDay: false,
     exercises: [
       {
-        exercise: "pullups",
+        name: "pullups",
         sets: 3,
         reps: 10,
       },
       {
-        exercise: "squats",
+        name: "squats",
         sets: 3,
         reps: 30,
       },
@@ -38,12 +38,12 @@ const initialProgram = [
     isRestDay: false,
     exercises: [
       {
-        exercise: "bridges",
+        name: "bridges",
         sets: 3,
         reps: 50,
       },
       {
-        exercise: "twists",
+        name: "twists",
         sets: 3,
         reps: 60,
       },
@@ -54,12 +54,12 @@ const initialProgram = [
     isRestDay: false,
     exercises: [
       {
-        exercise: "pushups",
+        name: "pushups",
         sets: 3,
         reps: 50,
       },
       {
-        exercise: "leg raises",
+        name: "leg raises",
         sets: 3,
         reps: 30,
       },
@@ -70,12 +70,12 @@ const initialProgram = [
     isRestDay: false,
     exercises: [
       {
-        exercise: "pullups",
+        name: "pullups",
         sets: 3,
         reps: 10,
       },
       {
-        exercise: "squats",
+        name: "squats",
         sets: 3,
         reps: 30,
       },
@@ -86,12 +86,12 @@ const initialProgram = [
     isRestDay: false,
     exercises: [
       {
-        exercise: "bridges",
+        name: "bridges",
         sets: 3,
         reps: 50,
       },
       {
-        exercise: "twists",
+        name: "twists",
         sets: 3,
         reps: 60,
       },
@@ -105,18 +105,23 @@ const initialProgram = [
 ];
 
 const initialSession = [
-  { exercise: "pushups", sets: 1, reps: 50 },
-  { exercise: "leg raises", sets: 1, reps: 30 },
+  { name: "pushups", sets: 1, reps: 50 },
+  { name: "leg raises", sets: 1, reps: 30 },
 ];
 
 export default function App() {
   const [sessionLog, setSessionLog] = useState(initialSession);
+  const [program, setProgram] = useState(initialProgram);
+
+  const handleAddExercise = (newExercise) => {
+    console.log(newExercise);
+  };
 
   return (
     <div className="App">
-      <SessionGoal />
+      <SessionGoal program={program} />
       <SessionLog exercises={sessionLog} />
-      <FormAddExercise />
+      <FormAddExercise program={program} onAddExercise={handleAddExercise} />
     </div>
   );
 }
@@ -127,8 +132,8 @@ function SessionLog({ exercises }) {
       <h2>Today's log</h2>
       <ul>
         {exercises.map((exercise) => (
-          <li key={exercise.exercise}>
-            {exercise.exercise} x{exercise.reps}
+          <li key={exercise.name}>
+            {exercise.name} x{exercise.reps}
           </li>
         ))}
       </ul>
@@ -136,9 +141,7 @@ function SessionLog({ exercises }) {
   );
 }
 
-function SessionGoal() {
-  const [program, setProgram] = useState(initialProgram);
-
+function SessionGoal({ program }) {
   const todayGoal = program[new Date().getDay()];
 
   return (
@@ -150,8 +153,8 @@ function SessionGoal() {
       ) : (
         <ul>
           {todayGoal.exercises.map((exercise) => (
-            <li key={exercise.exercise}>
-              {`${exercise.exercise} ${exercise.sets}x${exercise.reps}`}
+            <li key={exercise.name}>
+              {`${exercise.name} ${exercise.sets}x${exercise.reps}`}
             </li>
           ))}
         </ul>
@@ -160,17 +163,39 @@ function SessionGoal() {
   );
 }
 
-function FormAddExercise() {
+function FormAddExercise({ program, onAddExercise }) {
+  const [selectedExercise, setSelectedExercise] = useState("pushups");
+  const [reps, setReps] = useState("");
+
+  const exerciseNames = [
+    ...new Set(
+      program
+        .map((day) => day.exercises.map((exercise) => exercise.name))
+        .flat()
+    ),
+  ];
+
   return (
     <form>
       <h2>Add exercise</h2>
 
-      <select>
-        <option value="pushups">Pushups</option>
-        <option value="pullups">pullups</option>
+      <select
+        value={selectedExercise}
+        onChange={(e) => setSelectedExercise(e.target.value)}
+      >
+        {exerciseNames.map((exercise) => (
+          <option value={exercise} key={exercise}>
+            {exercise}
+          </option>
+        ))}
       </select>
 
-      <input type="text" placeholder="reps" />
+      <input
+        type="text"
+        placeholder="reps"
+        value={reps}
+        onChange={(e) => setReps(+e.target.value)}
+      />
 
       <button>Log exercise</button>
     </form>
