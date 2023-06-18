@@ -114,7 +114,7 @@ export default function App() {
   const [program, setProgram] = useState(initialProgram);
 
   const handleAddExercise = (newExercise) => {
-    console.log(newExercise);
+    setSessionLog((curLog) => [...curLog, newExercise]);
   };
 
   return (
@@ -131,8 +131,8 @@ function SessionLog({ exercises }) {
     <div>
       <h2>Today's log</h2>
       <ul>
-        {exercises.map((exercise) => (
-          <li key={exercise.name}>
+        {exercises.map((exercise, i) => (
+          <li key={`${exercise.name}-set${i}`}>
             {exercise.name} x{exercise.reps}
           </li>
         ))}
@@ -175,8 +175,22 @@ function FormAddExercise({ program, onAddExercise }) {
     ),
   ];
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newExercise = {
+      name: selectedExercise,
+      reps,
+    };
+
+    onAddExercise(newExercise);
+
+    setSelectedExercise("pushups");
+    setReps("");
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <h2>Add exercise</h2>
 
       <select
