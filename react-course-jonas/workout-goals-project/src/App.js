@@ -121,13 +121,16 @@ export default function App() {
   );
 }
 
-function SessionLog() {
+function SessionLog({ exercises }) {
   return (
     <div>
       <h2>Today's log</h2>
       <ul>
-        <li>Pushups x50</li>
-        <li>Leg raises x30</li>
+        {exercises.map((exercise) => (
+          <li key={exercise.exercise}>
+            {exercise.exercise} x{exercise.reps}
+          </li>
+        ))}
       </ul>
     </div>
   );
