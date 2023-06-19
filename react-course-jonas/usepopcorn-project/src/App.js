@@ -292,7 +292,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
       imdbID: selectedId,
       poster,
       title,
-      runtime: +runtime.split(" ")[0],
+      runtime: +runtime.split(" ")[0] || 90,
       imdbRating: +imdbRating,
       userRating,
     };
@@ -304,6 +304,10 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   useEffect(() => {
     if (!title) return;
     document.title = `Movie | ${title}`;
+
+    return () => {
+      document.title = "usePopcorn";
+    };
   }, [title]);
 
   useEffect(
