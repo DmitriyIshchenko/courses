@@ -55,9 +55,30 @@ const KEY = "e6ae3037";
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const query = "xsdfgsg";
+
+  const [query, setQuery] = useState("matrix");
+
+  /* experiments
+  useEffect(function () {
+    console.log("After the initial render");
+  }, []);
+
+  useEffect(function () {
+    console.log("After every render");
+  });
+
+  useEffect(
+    function () {
+      console.log("D");
+    },
+    [query]
+  );
+
+  console.log("During render");
+  */
 
   useEffect(() => {
     async function fetchMovies() {
@@ -77,21 +98,27 @@ export default function App() {
         }
 
         setMovies(data.Search);
+        setError("");
         // console.log(movies); // doesn't work
-        console.log(data);
       } catch (err) {
         setError(err.message);
       } finally {
         setIsLoading(false);
       }
     }
+
+    if (query.length < 3) {
+      setMovies([]);
+      setError("");
+      return;
+    }
     fetchMovies();
-  }, []);
+  }, [query]);
 
   return (
     <>
       <NavBar>
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
 
@@ -128,9 +155,7 @@ function NavBar({ children }) {
   );
 }
 
-function Search() {
-  const [query, setQuery] = useState("");
-
+function Search({ query, setQuery }) {
   return (
     <input
       className="search"
