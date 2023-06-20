@@ -10,14 +10,11 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const controller = new AbortController();
-
     async function fetchRates() {
       try {
         setIsLoading(true);
         const res = await fetch(
-          `https://api.frankfurter.app/latest?amount=${amount}&from=${selectedFrom}&to=${selectedTo}`,
-          { signal: controller.signal }
+          `https://api.frankfurter.app/latest?amount=${amount}&from=${selectedFrom}&to=${selectedTo}`
         );
 
         const data = await res.json();
@@ -31,12 +28,10 @@ export default function App() {
       }
     }
 
-    if (!amount) return setOutput(0);
+    if (!amount) return setOutput("");
     if (selectedFrom === selectedTo) return setOutput(amount);
 
     fetchRates();
-
-    return () => controller.abort();
   }, [selectedFrom, selectedTo, amount]);
 
   return (
@@ -45,10 +40,12 @@ export default function App() {
         type="text"
         value={amount}
         onChange={(e) => setAmount(+e.target.value)}
+        disabled={isLoading}
       />
       <select
         value={selectedFrom}
         onChange={(e) => setSelectedFrom(e.target.value)}
+        disabled={isLoading}
       >
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
@@ -58,6 +55,7 @@ export default function App() {
       <select
         value={selectedTo}
         onChange={(e) => setSelectedTo(e.target.value)}
+        disabled={isLoading}
       >
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
