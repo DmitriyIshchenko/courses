@@ -99,6 +99,7 @@ export default function App() {
   console.log("During render");
   */
 
+  // data fetching
   useEffect(() => {
     const controller = new AbortController();
 
@@ -281,6 +282,17 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   const watchedUserRating = watched.find(
     (movie) => movie.imdbID === selectedId
   )?.userRating;
+
+  // close tab on Esc press
+  useEffect(() => {
+    function callback(e) {
+      if (e.code === "Escape") onCloseMovie();
+    }
+    document.addEventListener("keydown", callback);
+
+    // must cleanup the event listener to prevent handlers accumulating
+    return () => document.removeEventListener("keydown", callback);
+  }, [onCloseMovie]);
 
   const {
     Title: title,
