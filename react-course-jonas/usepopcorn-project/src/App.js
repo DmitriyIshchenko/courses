@@ -60,7 +60,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const [query, setQuery] = useState("matrix");
+  const [query, setQuery] = useState("");
 
   const [selectedId, setSelectedId] = useState(null);
 
@@ -99,7 +99,7 @@ export default function App() {
   console.log("During render");
   */
 
-  // data fetching
+  // data fetching (it better be event handler)
   useEffect(() => {
     const controller = new AbortController();
 
@@ -135,6 +135,8 @@ export default function App() {
       setError("");
       return;
     }
+
+    handleCloseMovie();
     fetchMovies();
 
     //cleanup
