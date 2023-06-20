@@ -5,13 +5,14 @@ export default function App() {
   const [amount, setAmount] = useState(1);
   const [selectedFrom, setSelectedFrom] = useState("USD");
   const [selectedTo, setSelectedTo] = useState("EUR");
-
   const [output, setOutput] = useState("");
-  // let output;
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchRates() {
       try {
+        setIsLoading(true);
         const res = await fetch(
           `https://api.frankfurter.app/latest?amount=${amount}&from=${selectedFrom}&to=${selectedTo}`
         );
@@ -22,6 +23,8 @@ export default function App() {
         setOutput(data.rates[selectedTo]);
       } catch (err) {
         console.log(err.message);
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -56,7 +59,7 @@ export default function App() {
         <option value="CAD">CAD</option>
         <option value="INR">INR</option>
       </select>
-      <p>{output}</p>
+      <p>{isLoading ? "Loading..." : output}</p>
     </div>
   );
 }
