@@ -1,10 +1,35 @@
 // `https://api.frankfurter.app/latest?amount=100&from=EUR&to=USD`
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function App() {
   const [amount, setAmount] = useState(1);
   const [selectedFrom, setSelectedFrom] = useState("USD");
   const [selectedTo, setSelectedTo] = useState("EUR");
+
+  const [output, setOutput] = useState("");
+  // let output;
+
+  useEffect(() => {
+    async function fetchRates() {
+      try {
+        const res = await fetch(
+          `https://api.frankfurter.app/latest?amount=${amount}&from=${selectedFrom}&to=${selectedTo}`
+        );
+
+        const data = await res.json();
+        console.log(data);
+
+        setOutput(data.rates[selectedTo]);
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+
+    if (!amount) return setOutput(0);
+    if (selectedFrom === selectedTo) return setOutput(amount);
+
+    fetchRates();
+  }, [selectedFrom, selectedTo, amount]);
 
   return (
     <div>
@@ -31,7 +56,7 @@ export default function App() {
         <option value="CAD">CAD</option>
         <option value="INR">INR</option>
       </select>
-      <p>OUTPUT</p>
+      <p>{output}</p>
     </div>
   );
 }
