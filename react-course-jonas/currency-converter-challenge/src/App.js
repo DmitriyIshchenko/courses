@@ -10,11 +10,14 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function fetchRates() {
       try {
         setIsLoading(true);
         const res = await fetch(
-          `https://api.frankfurter.app/latest?amount=${amount}&from=${selectedFrom}&to=${selectedTo}`
+          `https://api.frankfurter.app/latest?amount=${amount}&from=${selectedFrom}&to=${selectedTo}`,
+          { signal: controller.signal }
         );
 
         const data = await res.json();
@@ -32,6 +35,8 @@ export default function App() {
     if (selectedFrom === selectedTo) return setOutput(amount);
 
     fetchRates();
+
+    return () => controller.abort();
   }, [selectedFrom, selectedTo, amount]);
 
   return (
