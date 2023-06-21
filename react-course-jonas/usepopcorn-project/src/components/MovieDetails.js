@@ -19,7 +19,6 @@ export default function MovieDetails({
 
   useEffect(() => {
     if (userRating) countRef.current += 1;
-    console.log(countRef.current);
   }, [userRating]);
 
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
