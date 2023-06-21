@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import StarRating from "./StarRating";
 import { KEY } from "../App";
 import ErrorMessage from "./UI/ErrorMessage";
@@ -13,8 +13,14 @@ export default function MovieDetails({
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [userRating, setUserRating] = useState("");
 
-  const [userRating, setUserRating] = useState(0);
+  const countRef = useRef(0);
+
+  useEffect(() => {
+    if (userRating) countRef.current += 1;
+    console.log(countRef.current);
+  }, [userRating]);
 
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
   const watchedUserRating = watched.find(
@@ -23,7 +29,6 @@ export default function MovieDetails({
 
   const {
     Title: title,
-    Year: year,
     Poster: poster,
     Runtime: runtime,
     imdbRating,
@@ -42,6 +47,7 @@ export default function MovieDetails({
       runtime: +runtime.split(" ")[0] || 90,
       imdbRating: +imdbRating,
       userRating,
+      countRatingDecisions: countRef.current,
     };
 
     onAddWatched(newWatchedMovie);
@@ -55,16 +61,22 @@ export default function MovieDetails({
  
   Early return:
   if(imdbRating > 8) return <p>Great!</p>
-  */
-  // imdb rating is still undefined on mount
-  // (will state false forever without manual update)
-  // const [isTop, setIsTop] = useState(imdbRating > 5);
-  // console.log(isTop);
-  // works but we should use the derived state instead
-  // useEffect(() => {
-  //   setIsTop(imdbRating > 5);
-  // }, [imdbRating]);
-  // const isTop = imdbRating > 5;
+
+  imdb rating is still undefined on mount
+  (will state false forever without manual update)
+
+  const [isTop, setIsTop] = useState(imdbRating > 5);
+  console.log(isTop);
+
+  works but we should use the derived state instead
+  useEffect(() => {
+    setIsTop(imdbRating > 5);
+  }, [imdbRating]);
+
+  derived state
+  const isTop = imdbRating > 5;
+    */
+
   /* close tab on Esc press */
   useEffect(() => {
     function callback(e) {
@@ -76,6 +88,7 @@ export default function MovieDetails({
     return () => document.removeEventListener("keydown", callback);
   }, [onCloseMovie]);
 
+  // update document title
   useEffect(() => {
     if (!title) return;
     document.title = `Movie | ${title}`;
@@ -85,6 +98,7 @@ export default function MovieDetails({
     };
   }, [title]);
 
+  // fetch movie details
   useEffect(
     function () {
       async function getMovieDetails() {
