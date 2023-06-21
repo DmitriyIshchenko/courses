@@ -10,18 +10,16 @@ import MovieList from "./components/MovieList";
 import MovieDetails from "./components/MovieDetails";
 import WatchedMoviesList from "./components/WatchedMoviesList";
 import WatchedSummary from "./components/WatchedSummary";
+import { useMovies } from "./hooks/useMovies";
 
 export const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-export const KEY = "e6ae3037";
-
 export default function App() {
-  const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
+  const { movies, isLoading, error } = useMovies(query);
+
   // const [watched, setWatched] = useState([]);
   // lazy initial state (requires pure function as a callback)
   const [watched, setWatched] = useState(() => {
@@ -71,50 +69,6 @@ export default function App() {
   }, [watched]);
 
   // data fetching (it better be event handler)
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function fetchMovies() {
-      try {
-        setIsLoading(true);
-
-        const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
-          { signal: controller.signal }
-        );
-
-        if (!res.ok)
-          throw new Error("Something went wrong with fetching movies");
-
-        const data = await res.json();
-        if (data.Response === "False") {
-          throw new Error(data.Error);
-        }
-
-        setMovies(data.Search);
-        setError("");
-        // console.log(movies); // doesn't work
-      } catch (err) {
-        if (err.name !== "AbortError") setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    if (query.length < 3) {
-      setMovies([]);
-      setError("");
-      return;
-    }
-
-    handleCloseMovie();
-    fetchMovies();
-
-    //cleanup
-    return function () {
-      controller.abort();
-    };
-  }, [query]);
 
   return (
     <>

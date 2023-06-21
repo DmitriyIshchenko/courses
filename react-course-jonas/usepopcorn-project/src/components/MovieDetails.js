@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import StarRating from "./StarRating";
-import { KEY } from "../App";
+import { KEY } from "../hooks/useMovies";
 import ErrorMessage from "./UI/ErrorMessage";
 import Loader from "./UI/Loader";
 
