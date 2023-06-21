@@ -8,14 +8,16 @@ const KEY = "e6ae3037";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
-
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-
   const [query, setQuery] = useState("");
-
   const [selectedId, setSelectedId] = useState(null);
+  // const [watched, setWatched] = useState([]);
+  // lazy initial state (requires pure function as a callback)
+  const [watched, setWatched] = useState(() => {
+    const storedValue = localStorage.getItem("watched");
+    return JSON.parse(storedValue);
+  });
 
   function handleSelectMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
@@ -27,6 +29,8 @@ export default function App() {
 
   function handleAddWatched(movie) {
     setWatched((watched) => [...watched, movie]);
+
+    // localStorage.setItem("watched", JSON.stringify([...watched, movie]));
   }
 
   function handleDeleteWatched(id) {
@@ -51,6 +55,10 @@ export default function App() {
 
   console.log("During render");
   */
+
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify(watched));
+  }, [watched]);
 
   // data fetching (it better be event handler)
   useEffect(() => {
@@ -285,7 +293,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   // }, [imdbRating]);
   // const isTop = imdbRating > 5;
 
-  // close tab on Esc press
+  /* close tab on Esc press */
   useEffect(() => {
     function callback(e) {
       if (e.code === "Escape") onCloseMovie();
