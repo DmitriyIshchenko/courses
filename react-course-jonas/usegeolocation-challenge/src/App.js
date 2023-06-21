@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function useGeolocation(countClicks) {
+function useGeolocation() {
   const [isLoading, setIsLoading] = useState(false);
   const [position, setPosition] = useState({});
   const [error, setError] = useState(null);
