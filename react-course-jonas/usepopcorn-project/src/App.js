@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import Main from "./Main";
-import Box from "./Box";
-import NavBar from "./NavBar";
-import Search from "./Search";
-import NumResults from "./NumResults";
-import Loader from "./Loader";
-import ErrorMessage from "./ErrorMessage";
-import MovieList from "./MovieList";
-import MovieDetails from "./MovieDetails";
-import WatchedMoviesList from "./WatchedMoviesList";
-import WatchedSummary from "./WatchedSummary";
+import Main from "./components/Main";
+import Box from "./components/Box";
+import NavBar from "./components/NavBar/NavBar";
+import Search from "./components/NavBar/Search";
+import NumResults from "./components/NavBar/NumResults";
+import Loader from "./components/UI/Loader";
+import ErrorMessage from "./components/UI/ErrorMessage";
+import MovieList from "./components/MovieList";
+import MovieDetails from "./components/MovieDetails";
+import WatchedMoviesList from "./components/WatchedMoviesList";
+import WatchedSummary from "./components/WatchedSummary";
 
 export const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
