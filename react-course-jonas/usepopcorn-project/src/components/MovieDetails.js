@@ -3,6 +3,7 @@ import StarRating from "./StarRating";
 import { KEY } from "../hooks/useMovies";
 import ErrorMessage from "./UI/ErrorMessage";
 import Loader from "./UI/Loader";
+import { useKey } from "../hooks/useKey";
 
 export default function MovieDetails({
   selectedId,
@@ -77,15 +78,8 @@ export default function MovieDetails({
     */
 
   /* close tab on Esc press */
-  useEffect(() => {
-    function callback(e) {
-      if (e.code === "Escape") onCloseMovie();
-    }
-    document.addEventListener("keydown", callback);
 
-    // must cleanup the event listener to prevent handlers accumulating
-    return () => document.removeEventListener("keydown", callback);
-  }, [onCloseMovie]);
+  useKey("Escape", onCloseMovie);
 
   // update document title
   useEffect(() => {
