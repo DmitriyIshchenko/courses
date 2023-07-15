@@ -35,6 +35,18 @@ function reducer(state, action) {
       return { ...state, balance: state.balance + action.payload };
     case "withdraw":
       return { ...state, balance: state.balance - action.payload };
+    case "requestLoan":
+      return state.loan === 0
+        ? {
+            ...state,
+            loan: action.payload,
+            balance: state.balance + action.payload,
+          }
+        : state;
+    case "payLoan":
+      return state.loan !== 0
+        ? { ...state, loan: 0, balance: state.balance - action.payload }
+        : state;
     default:
       throw new Error("Unknown action");
   }
@@ -76,12 +88,18 @@ export default function App() {
         </button>
       </p>
       <p>
-        <button onClick={() => {}} disabled={!isActive}>
+        <button
+          onClick={() => dispatch({ type: "requestLoan", payload: 5000 })}
+          disabled={!isActive}
+        >
           Request a loan of 5000
         </button>
       </p>
       <p>
-        <button onClick={() => {}} disabled={!isActive}>
+        <button
+          onClick={() => dispatch({ type: "payLoan", payload: 5000 })}
+          disabled={!isActive}
+        >
           Pay loan
         </button>
       </p>
