@@ -31,6 +31,8 @@ function reducer(state, action) {
   switch (action.type) {
     case "openAccount":
       return { ...state, isActive: true, balance: 500 };
+    case "deposit":
+      return { ...state, balance: state.balance + action.payload };
     default:
       throw new Error("Unknown action");
   }
@@ -56,7 +58,10 @@ export default function App() {
         </button>
       </p>
       <p>
-        <button onClick={() => {}} disabled={!isActive}>
+        <button
+          onClick={() => dispatch({ type: "deposit", payload: 150 })}
+          disabled={!isActive}
+        >
           Deposit 150
         </button>
       </p>
