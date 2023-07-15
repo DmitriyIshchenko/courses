@@ -47,6 +47,8 @@ function reducer(state, action) {
       return state.loan !== 0
         ? { ...state, loan: 0, balance: state.balance - action.payload }
         : state;
+    case "closeAccount":
+      return state.balance === 0 && state.loan === 0 ? initialState : state;
     default:
       throw new Error("Unknown action");
   }
@@ -104,7 +106,10 @@ export default function App() {
         </button>
       </p>
       <p>
-        <button onClick={() => {}} disabled={!isActive}>
+        <button
+          onClick={() => dispatch({ type: "closeAccount" })}
+          disabled={!isActive}
+        >
           Close account
         </button>
       </p>
