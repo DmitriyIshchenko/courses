@@ -36,17 +36,16 @@ function reducer(state, action) {
     case "withdraw":
       return { ...state, balance: state.balance - action.payload };
     case "requestLoan":
-      return state.loan === 0
-        ? {
-            ...state,
-            loan: action.payload,
-            balance: state.balance + action.payload,
-          }
-        : state;
+      if (state.loan > 0) return state;
+
+      return {
+        ...state,
+        loan: action.payload,
+        balance: state.balance + action.payload,
+      };
+
     case "payLoan":
-      return state.loan !== 0
-        ? { ...state, loan: 0, balance: state.balance - action.payload }
-        : state;
+      return { ...state, loan: 0, balance: state.balance - state.loan };
     case "closeAccount":
       return state.balance === 0 && state.loan === 0 ? initialState : state;
     default:
@@ -99,7 +98,7 @@ export default function App() {
       </p>
       <p>
         <button
-          onClick={() => dispatch({ type: "payLoan", payload: 5000 })}
+          onClick={() => dispatch({ type: "payLoan" })}
           disabled={!isActive}
         >
           Pay loan
