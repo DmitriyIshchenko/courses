@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import styles from "./Form.module.css";
 import Button from "./Button";
 import BackButton from "./BackButton";
 import Message from "./Message";
 import Spinner from "./Spinner";
 import { useUrlPosition } from "../hooks/useUrlPosition";
+import { useCities } from "../contexts/CitiesContext";
+
+import styles from "./Form.module.css";
 
 export function convertToEmoji(countryCode) {
   const codePoints = countryCode
@@ -20,8 +23,10 @@ const BASE_URL = "https://api.bigdatacloud.net/data/reverse-geocode-client";
 
 function Form() {
   const [lat, lng] = useUrlPosition();
-  const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
+  const { createCity, isLoading: isLoadingCity } = useCities();
+  const navigate = useNavigate();
 
+  const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
   const [date, setDate] = useState(new Date());
@@ -44,9 +49,8 @@ function Form() {
           throw new Error(
             "That doesn't seem to be a city. Click somewhere else 😉"
           );
-
         setCityName(data.city || data.locality || "");
-        setCountry(data.country);
+        setCountry(data.countryName);
         setEmoji(convertToEmoji(data.countryCode));
       } catch (err) {
         setGeocodingError(err.message);
@@ -58,6 +62,24 @@ function Form() {
     fetchCityData();
   }, [lat, lng]);
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!cityName || !date) return;
+
+    const newCity = {
+      cityName,
+      date,
+      notes,
+      country,
+      emoji,
+      position: { lat, lng },
+    };
+
+    await createCity(newCity);
+    navigate("/app/cities");
+  }
+
   if (isLoadingGeocoding) return <Spinner />;
 
   if (!lat || !lng)
@@ -66,7 +88,10 @@ function Form() {
   if (geocodingError) return <Message message={geocodingError} />;
 
   return (
-    <form className={styles.form}>
+    <form
+      className={`${styles.form} ${isLoadingCity ? styles.loading : ""} `}
+      onSubmit={handleSubmit}
+    >
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
