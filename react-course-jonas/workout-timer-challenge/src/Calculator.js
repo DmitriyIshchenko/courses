@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import clickSound from "./ClickSound.m4a";
 
 function Calculator({ workouts, allowSound }) {
@@ -12,26 +12,50 @@ function Calculator({ workouts, allowSound }) {
   const mins = Math.floor(duration);
   const seconds = (duration - mins) * 60;
 
+  /* 
+  Toggling the allowSound will result in re-creating the function. 
+  Which will trigger the effect and play the sound and reset the state. 
+  A lot of problems with this approach.
+  */
+  // const playSound = useCallback(
+  //   function () {
+  //     if (!allowSound) return;
+  //     const sound = new Audio(clickSound);
+  //     sound.play();
+  //   },
+  //   [allowSound]
+  // );
+
   // setting state based on another state
   // isn't really good practice, but in this case it's ok
   // will produce a second render
   useEffect(() => {
     setDuration((number * sets * speed) / 60 + (sets - 1) * durationBreak);
+
+    // playSound();
   }, [number, sets, speed, durationBreak]);
 
   function handleInc() {
     setDuration((duration) => Math.floor(duration) + 1);
+    // playSound();
   }
 
   function handleDec() {
     setDuration((duration) => (duration > 1 ? Math.floor(duration) - 1 : 0));
+    // playSound();
   }
 
-  const playSound = function () {
-    if (!allowSound) return;
-    const sound = new Audio(clickSound);
-    sound.play();
-  };
+  // synchronize the sound with the duration state instead
+  // one thing - one effect
+  useEffect(() => {
+    const playSound = function () {
+      if (!allowSound) return;
+      const sound = new Audio(clickSound);
+      sound.play();
+    };
+
+    playSound();
+  }, [duration, allowSound]);
 
   return (
     <>
