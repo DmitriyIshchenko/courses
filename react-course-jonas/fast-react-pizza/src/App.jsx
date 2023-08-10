@@ -5,13 +5,20 @@ import Menu from "./features/menu/Menu";
 import Cart from "./features/cart/Cart";
 import Order from "./features/order/Order";
 import CreateOrder from "./features/order/CreateOrder";
+import AppLayout from "./ui/AppLayout";
 
+// AppLayout is called a layout route since it doesn't have the specified path
 const router = createBrowserRouter([
-  { path: "/", element: <Home /> },
-  { path: "/menu", element: <Menu /> },
-  { path: "/cart", element: <Cart /> },
-  { path: "/order/new", element: <CreateOrder /> },
-  { path: "/order/:orderId", element: <Order /> },
+  {
+    element: <AppLayout />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: "/menu", element: <Menu /> },
+      { path: "/cart", element: <Cart /> },
+      { path: "/order/new", element: <CreateOrder /> },
+      { path: "/order/:orderId", element: <Order /> },
+    ],
+  },
 ]);
 
 function App() {
