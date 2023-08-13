@@ -1,19 +1,21 @@
 // Test ID: IIDSAT
 
+import { useEffect } from 'react';
 import { useFetcher, useLoaderData } from 'react-router-dom';
 
 import OrderItem from './OrderItem';
-import { getOrder } from '../../services/apiRestaurant';
 
+import { getOrder } from '../../services/apiRestaurant';
 import {
   calcMinutesLeft,
   formatCurrency,
   formatDate,
 } from '../../utils/helpers';
-import { useEffect } from 'react';
+import UpdateOrder from './UpdateOrder';
 
 function Order() {
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
+  const order = useLoaderData();
   const {
     id,
     status,
@@ -22,7 +24,7 @@ function Order() {
     orderPrice,
     estimatedDelivery,
     cart,
-  } = useLoaderData();
+  } = order;
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   const fetcher = useFetcher();
@@ -86,6 +88,8 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+
+      {!priority && <UpdateOrder />}
     </div>
   );
 }
