@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const LoginLayout = styled.main`
-  min-height: 100vh;
+  min-height: 100vh;pa
   display: grid;
   grid-template-columns: 48rem;
   align-content: center;
