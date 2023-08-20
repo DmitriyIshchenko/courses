@@ -1,26 +1,27 @@
 import CreateCabinForm from "./CreateCabinForm";
-import CabinTable from "./CabinTable";
 import Modal from "../../ui/Modal";
 import Button from "../../ui/Button";
 
 function AddCabin() {
   return (
-    <Modal>
-      <Modal.Open opens="cabin-form">
-        <Button>Add new cabin</Button>
-      </Modal.Open>
-      <Modal.Window name="cabin-form">
-        <CreateCabinForm />
-      </Modal.Window>
+    <div>
+      <Modal>
+        <Modal.Open opens="cabin-form">
+          <Button>Add new cabin</Button>
+        </Modal.Open>
+        <Modal.Window name="cabin-form">
+          <CreateCabinForm />
+        </Modal.Window>
 
-      {/* we can have multiple windows -> name and opens props */}
-      <Modal.Open opens="table">
+        {/* we can have multiple windows -> name and opens props */}
+        {/* <Modal.Open opens="table">
         <Button>Show table</Button>
       </Modal.Open>
       <Modal.Window name="table">
         <CabinTable />
-      </Modal.Window>
-    </Modal>
+      </Modal.Window> */}
+      </Modal>
+    </div>
   );
 }
 
