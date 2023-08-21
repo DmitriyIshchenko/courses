@@ -29,15 +29,18 @@ const StyledToggle = styled.button`
   }
 `;
 
-const StyledList = styled.ul`
+const StyledList = styled.ul.attrs((props) => ({
+  $right: props.$position.x,
+  $top: props.$position.y,
+}))`
   position: fixed;
 
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
 
-  right: ${(props) => props.position.x}px;
-  top: ${(props) => props.position.y}px;
+  right: ${(props) => props.$right}px;
+  top: ${(props) => props.$top}px;
 `;
 
 const StyledButton = styled.button`
@@ -124,7 +127,7 @@ function List({ id, children }) {
 
   // menu should float above the page
   return createPortal(
-    <StyledList ref={ref} position={position}>
+    <StyledList ref={ref} $position={position}>
       {children}
     </StyledList>,
     document.body
