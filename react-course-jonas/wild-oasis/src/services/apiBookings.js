@@ -2,12 +2,19 @@ import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
 // select only required data and also select the referenced cabin and guest
-export async function getBookings() {
-  const { data, error } = await supabase
+export async function getBookings({ filter, sortBy }) {
+  let query = supabase
     .from("bookings")
     .select(
       "id, created_at, startDate, endDate, numNights, numGuests, status, totalPrice, cabins(name), guests(fullName, email)"
     );
+
+  // FILTER
+  // TODO: for multiple filters pass an array of objects, then loop over it and add filters to query
+  if (filter !== null)
+    query = query[filter.method || "eq"](filter.field, filter.value);
+
+  const { data, error } = await query;
 
   if (error) {
     console.error(error);
