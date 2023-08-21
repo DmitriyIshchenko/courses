@@ -11,9 +11,7 @@ const StyledFilter = styled.div`
   gap: 0.4rem;
 `;
 
-const FilterButton = styled.button.attrs((props) => ({
-  $active: props.$active,
-}))`
+const FilterButton = styled.button`
   background-color: var(--color-grey-0);
   border: none;
 
