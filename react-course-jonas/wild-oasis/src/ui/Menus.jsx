@@ -29,10 +29,9 @@ const StyledToggle = styled.button`
   }
 `;
 
-const StyledList = styled.ul.attrs((props) => ({
-  $right: props.$position.x,
-  $top: props.$position.y,
-}))`
+const StyledList = styled.ul.attrs((props) => {
+  return { $right: props.$position.x, $top: props.$position.y };
+})`
   position: fixed;
 
   background-color: var(--color-grey-0);
