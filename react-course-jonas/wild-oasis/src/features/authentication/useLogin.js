@@ -6,12 +6,12 @@ import { toast } from "react-hot-toast";
 
 export function useLogin() {
   const queryClient = useQueryClient();
-
   const navigate = useNavigate();
+
   const { mutate: login, isLoading: isLoggingIn } = useMutation({
     mutationFn: (credentials) => loginApi(credentials),
     onSuccess: (user) => {
-      queryClient.setQueryData(["user", user]);
+      queryClient.setQueryData(["user"], user.user);
       navigate("/dashboard", { replace: true });
     },
     onError: (error) => {
