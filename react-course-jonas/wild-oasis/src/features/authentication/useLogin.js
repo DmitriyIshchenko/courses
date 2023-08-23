@@ -12,7 +12,7 @@ export function useLogin() {
     mutationFn: (credentials) => loginApi(credentials),
     onSuccess: (user) => {
       queryClient.setQueryData(["user", user]);
-      navigate("/");
+      navigate("/dashboard", { replace: true });
     },
     onError: (error) => {
       console.error(error.message);
