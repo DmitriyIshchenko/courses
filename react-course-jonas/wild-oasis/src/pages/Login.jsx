@@ -1,13 +1,8 @@
-import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 
 import LoginForm from "../features/authentication/LoginForm";
 import Heading from "../ui/Heading";
 import Logo from "../ui/Logo";
-import Spinner from "../ui/Spinner";
-import FullPage from "../ui/FullPage";
-
-import { useUser } from "../features/authentication/useUser";
 
 const LoginLayout = styled.main`
   min-height: 100vh;
@@ -20,17 +15,6 @@ const LoginLayout = styled.main`
 `;
 
 function Login() {
-  const { isAuthenticated, isLoading } = useUser();
-
-  if (isLoading)
-    return (
-      <FullPage>
-        <Spinner />;
-      </FullPage>
-    );
-
-  if (isAuthenticated) return <Navigate to="/" />;
-
   return (
     <LoginLayout>
       <Logo />
