@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
-const StyledSelect = styled.select.attrs((props) => ({
-  $borderColor:
-    props.$type === "white" ? "var(--color-grey-100)" : "var(--color-grey-300)",
-}))`
+const StyledSelect = styled.select.attrs((props) => {
+  return {
+    $borderColor:
+      props.$type === "white"
+        ? "var(--color-grey-100)"
+        : "var(--color-grey-300)",
+  };
+})`
   font-size: 1.4rem;
   padding: 0.8rem 1.2rem;
   border: 1px solid ${(props) => props.$borderColor};
