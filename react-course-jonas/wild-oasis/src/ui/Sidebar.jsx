@@ -3,9 +3,6 @@ import { styled } from "styled-components";
 import Logo from "./Logo";
 import MainNav from "./MainNav";
 
-// DEVELOPMENT
-import Uploader from "../data/Uploader";
-
 const StyledSidebar = styled.aside`
   grid-row: 1/-1;
 
@@ -23,9 +20,6 @@ function Sidebar() {
     <StyledSidebar>
       <Logo />
       <MainNav />
-
-      {/* DEVELOPMENT */}
-      <Uploader />
     </StyledSidebar>
   );
 }
