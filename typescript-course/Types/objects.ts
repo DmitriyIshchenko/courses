@@ -21,3 +21,11 @@ function randomCoordinate(): { x: number; y: number } {
     y: Math.random(),
   };
 }
+
+// excess properties
+// ERROR - passing extra data with object literal is likely a mistake (that's what they thought)
+// printName({ first: "Jesse", last: "Pinkman", age: 22 });
+
+// NO ERROR - passing the variable with extra data is fine
+const character = { first: "Jesse", last: "Pinkman", age: 22 };
+printName(character); // NO ERROR
