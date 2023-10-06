@@ -50,3 +50,12 @@ addNums(1, 2);
 function rnd(num: number) {
   return Math.random() > 0.5 ? num.toString() : num;
 }
+
+// Contextual typing
+const colors = ["red", "orange", "yellow"];
+
+// don't need to specify color's type
+colors.map((color) => {
+  // return color.toFixed(); // ERROR
+  return color.toUpperCase();
+});
