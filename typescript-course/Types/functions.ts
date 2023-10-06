@@ -21,3 +21,13 @@ greet(true); // ERROR
 doSomething("ChickenFace", 76, false);
 doSomething("ChickenFace", 76, false, 11); // ERROR
 doSomething("ChickenFace", 76); // ERROR
+
+// Default parameters
+
+function greetWithDefault(person: string = "stranger") {
+  return `Hi there, ${person}`;
+}
+
+greetWithDefault();
+greetWithDefault("Walter");
+greetWithDefault(1234); // ERROR
