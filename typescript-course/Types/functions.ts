@@ -59,3 +59,10 @@ colors.map((color) => {
   // return color.toFixed(); // ERROR
   return color.toUpperCase();
 });
+
+// Void return type
+
+function printTwice(msg: string): void {
+  console.log(msg);
+  console.log(msg);
+}
