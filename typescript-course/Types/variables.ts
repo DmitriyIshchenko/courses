@@ -14,3 +14,12 @@ numCatLives += 1;
 let gameOver: boolean = false;
 gameOver = true;
 // gameOver = 'true'; // Error
+
+// Type Inference
+let tvShow = "Dexter"; // infers 'string'
+tvShow = "Breaking bad";
+// tvShow = false; // Error
+
+let isFunny = false;
+isFunny = true;
+// isFunny = 'fsdfsdf'; // Error
