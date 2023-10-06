@@ -66,3 +66,18 @@ function printTwice(msg: string): void {
   console.log(msg);
   console.log(msg);
 }
+
+// Never return type
+
+function makeError(msg: string): never {
+  // return msg; // ERROR
+  throw new Error(msg);
+}
+
+function gameLoop(): never {
+  while (true) {
+    console.log("GAME LOOP");
+  }
+
+  // return true; // ERROR
+}
