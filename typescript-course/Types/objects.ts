@@ -56,3 +56,32 @@ function doublePoint(point: Point): Point {
     y: point.y * 2,
   };
 }
+
+// Nested objects
+type Song = {
+  title: string;
+  artist: string;
+  numStreams: number;
+  credits: {
+    producer: string;
+    writer: string;
+  };
+};
+
+function calculatePayout(song: Song): number {
+  return 0.0033 * song.numStreams;
+}
+
+function printSong(song: Song): void {
+  console.log(`${song.title} - ${song.artist}`);
+}
+
+const testSong: Song = {
+  title: "Uprising",
+  artist: "Muse",
+  numStreams: 124332234,
+  credits: { producer: "John Doe", writer: "Chuck Williams" },
+};
+
+calculatePayout(testSong); // OK
+printSong(testSong); // OK
