@@ -32,10 +32,10 @@ printName(character); // NO ERROR
 
 // Type aliases
 
-type Point = {
-  x: number;
-  y: number;
-};
+// type Point = {
+//   x: number;
+//   y: number;
+// };
 
 // function doublePoint(point: { x: number; y: number }): {
 //   x: number;
@@ -48,14 +48,14 @@ type Point = {
 // }
 
 // reuse type
-let coord: Point = { x: 1, y: 2 };
+// let coord: Point = { x: 1, y: 2 };
 
-function doublePoint(point: Point): Point {
-  return {
-    x: point.x * 2,
-    y: point.y * 2,
-  };
-}
+// function doublePoint(point: Point): Point {
+//   return {
+//     x: point.x * 2,
+//     y: point.y * 2,
+//   };
+// }
 
 // Nested objects
 type Song = {
@@ -85,3 +85,14 @@ const testSong: Song = {
 
 calculatePayout(testSong); // OK
 printSong(testSong); // OK
+
+// OPTIONAL PROPERTIES
+
+type Point = {
+  x: number;
+  y: number;
+  // z: number; // required
+  z?: number; // optional
+};
+
+const myPoint: Point = { x: 1, y: 2, z: 3 };
