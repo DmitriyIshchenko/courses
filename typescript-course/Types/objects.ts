@@ -96,3 +96,18 @@ type Point = {
 };
 
 const myPoint: Point = { x: 1, y: 2, z: 3 };
+
+// READONLY MODIFIER
+
+type User = {
+  readonly id: number;
+  username: string;
+};
+
+const user: User = {
+  id: 1,
+  username: "John",
+};
+
+console.log(user.id);
+// user.id = 2; // ERROR
