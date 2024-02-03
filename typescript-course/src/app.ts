@@ -38,3 +38,21 @@ if (button) {
 
 print(add(43, 4));
 print(add(2));
+
+// SPREAD OPERATOR
+const hobbies = ["Sports", "Cooking"];
+const activeHobbies = ["Hiking"];
+activeHobbies.push(...hobbies);
+
+const person = {
+  name: "Max",
+  age: 30,
+};
+const copiedPerson = { ...person };
+
+const addRest = (...numbers: number[]) => {
+  return numbers.reduce((acc, cur) => acc + cur, 0);
+};
+
+const addedNumbers = addRest(1, 2, 2, 3, 3, 56);
+print(addedNumbers);
