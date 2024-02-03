@@ -25,7 +25,7 @@ if (age > 20) {
 
 // ARROW FUNCTION
 
-const add = (a: number, b: number) => a + b;
+const add = (a: number, b: number = 1) => a + b;
 
 console.log(add(1, 2));
 
@@ -37,3 +37,4 @@ if (button) {
 }
 
 print(add(43, 4));
+print(add(2));
