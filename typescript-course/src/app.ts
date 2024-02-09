@@ -1,4 +1,5 @@
 class Department {
+  static fiscalYear = 2001;
   protected employees: string[] = [];
 
   // shorthand
@@ -6,6 +7,8 @@ class Department {
 
   describe(this: Department) {
     console.log(`Department (${this.id}): ${this.name}`);
+    // console.log(this.fiscalYear) // Error
+    console.log(Department.fiscalYear);
   }
 
   addEmployee(employee: string) {
@@ -15,6 +18,10 @@ class Department {
   printEmployeesInfo() {
     console.log(this.employees.length);
     console.log(this.employees);
+  }
+
+  static createEmployee(name: string) {
+    return { name };
   }
 }
 
@@ -66,6 +73,10 @@ class AccountingDepartment extends Department {
     console.log(this.reports);
   }
 }
+
+const steven = Department.createEmployee("Steven"); // static method
+const year = Department.fiscalYear; // static field
+console.log(steven, year);
 
 const IT = new ITDepartment("i1", ["Max"]);
 console.log(IT);
