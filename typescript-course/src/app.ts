@@ -39,11 +39,24 @@ class ITDepartment extends Department {
 
 class AccountingDepartment extends Department {
   private lastReport: string;
+  private static instance: AccountingDepartment;
 
-  constructor(id: string, private reports: string[]) {
+  // Singleton pattern(only 1 instance allowed): private constructor + static instance
+  private constructor(id: string, private reports: string[]) {
     super(id, "Accounting");
 
     this.lastReport = reports[0];
+  }
+
+  // check if there is an instance already
+  static getInstance(id: string, reports: string[]) {
+    // inside static this refers to the class itself
+    if (this.instance) {
+      return this.instance;
+    }
+
+    this.instance = new AccountingDepartment(id, reports);
+    return this.instance;
   }
 
   get mostRecentReport() {
@@ -90,7 +103,11 @@ const IT = new ITDepartment("i1", ["Max"]);
 console.log(IT);
 IT.describe();
 
-const accounting = new AccountingDepartment("a1", []);
+// const accounting = new AccountingDepartment("a1", []);
+const accounting = AccountingDepartment.getInstance("a1", []);
+const accounting2 = AccountingDepartment.getInstance("a2", []); // still return the first instance
+
+console.log(accounting, accounting2);
 accounting.addEmployee("john");
 accounting.addEmployee("Max");
 
