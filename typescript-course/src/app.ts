@@ -1,15 +1,13 @@
-class Department {
+// can not be instantiated
+abstract class Department {
   static fiscalYear = 2001;
   protected employees: string[] = [];
 
   // shorthand
-  constructor(private readonly id: string, private name: string) {}
+  constructor(protected readonly id: string, protected name: string) {}
 
-  describe(this: Department) {
-    console.log(`Department (${this.id}): ${this.name}`);
-    // console.log(this.fiscalYear) // Error
-    console.log(Department.fiscalYear);
-  }
+  // enforce that all child classes share this method, with their own implementation
+  abstract describe(this: Department): void;
 
   addEmployee(employee: string) {
     this.employees.push(employee);
@@ -30,6 +28,12 @@ class ITDepartment extends Department {
   constructor(id: string, admins: string[]) {
     super(id, "IT");
     this.admins = admins;
+  }
+
+  describe(): void {
+    console.log(`IT Department - ID : ${this.id}`);
+    // console.log(this.fiscalYear) // Error
+    console.log(Department.fiscalYear);
   }
 }
 
@@ -55,6 +59,10 @@ class AccountingDepartment extends Department {
       throw new Error("Please pass in a valid value");
     }
     this.addReport(value);
+  }
+
+  describe() {
+    console.log("Accounting department - ID: " + this.id);
   }
 
   addEmployee(name: string) {
