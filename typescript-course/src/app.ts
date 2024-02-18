@@ -147,3 +147,26 @@ const errorBag: ErrorContainer = {
   email: "Invalid email",
   username: "Too short",
 };
+
+// FUNCTION OVERLOADS
+
+function addOverload(a: number, b: number): number;
+function addOverload(a: string, b: string): string;
+function addOverload(a: Combinable, b: Combinable) {
+  // type guard
+  if (typeof a === "string" || typeof b === "string") {
+    return a.toString() + b.toString();
+  }
+
+  return a + b;
+}
+
+const result1 = add(1, 5); // returns union type
+const result2 = add("John", "Doe"); // returns union type
+const result3 = add("John", "Doe") as string; // type cast string (bad)
+
+// result2.split(" "); // Error
+
+const resultOverloadNumber = addOverload(1, 2); // returns number
+const resultOverloadString = addOverload("John", "Doe"); // returns string
+resultOverloadString.split(" "); // ok
