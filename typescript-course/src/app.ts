@@ -131,3 +131,19 @@ const userInputElement = document.getElementById("user-input");
 if (userInputElement) {
   (userInputElement as HTMLInputElement).value = "hello";
 }
+
+// INDEX TYPES
+// don't know in advance which exact properties are going to be in the object
+// {email: 'Not a valid input', username: 'Must start with a letter'}
+// {email: 'Not a valid input', password: 'Too short'}
+
+interface ErrorContainer {
+  // id: string; // still possible to add properties, but they have to match the index type
+  // id: number; // Error
+  [key: string]: string; // matches every property
+}
+
+const errorBag: ErrorContainer = {
+  email: "Invalid email",
+  username: "Too short",
+};
