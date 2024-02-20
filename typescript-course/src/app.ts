@@ -170,3 +170,15 @@ const result3 = add("John", "Doe") as string; // type cast string (bad)
 const resultOverloadNumber = addOverload(1, 2); // returns number
 const resultOverloadString = addOverload("John", "Doe"); // returns string
 resultOverloadString.split(" "); // ok
+
+// OPTIONAL CHAINING - don't know with certainty whether property defined or not
+
+const fetchedUserDate = {
+  id: "u1",
+  name: "steve",
+  job: { title: "CEO", description: "My own company" },
+};
+
+// console.log(fetchedUserDate.job.title);
+// console.log(fetchedUserDate.job && fetchedUserDate.job.title); // JS way - && short circuits to first falsy value
+console.log(fetchedUserDate?.job.title); // short circuits to undefined
