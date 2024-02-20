@@ -182,3 +182,12 @@ const fetchedUserDate = {
 // console.log(fetchedUserDate.job.title);
 // console.log(fetchedUserDate.job && fetchedUserDate.job.title); // JS way - && short circuits to first falsy value
 console.log(fetchedUserDate?.job.title); // short circuits to undefined
+
+// NULLISH COALESCING - short circuits to first non nullish value (not null or undefined)
+
+const userInput = null;
+
+// const storedData = userInput || "DEFAULT"; // doesn't work as intended with number 0, false or empty string '' || 'default' -> ''
+const storedData = userInput ?? "DEFAULT";
+
+console.log(storedData);
