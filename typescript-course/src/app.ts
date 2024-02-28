@@ -33,3 +33,35 @@ class Person {
 const pers = new Person();
 
 console.log(pers);
+
+// ----
+
+// target is prototype of the object
+function Log(target: any, propertyName: string | Symbol) {
+  console.log("property decorator");
+  console.log(target, propertyName);
+}
+
+class Product {
+  @Log // executes at class definition
+  title: string;
+  private _price: number;
+
+  set price(val: number) {
+    if (val > 0) {
+      this._price = val;
+    } else {
+      throw new Error("Invalid price!");
+    }
+  }
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this._price = p;
+  }
+
+  getPriceWithTax(tax: number) {
+    // @Logger("LOGGING - PERSON")
+    return this._price * (1 + tax);
+  }
+}
