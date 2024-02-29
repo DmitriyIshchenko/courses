@@ -36,10 +36,41 @@ console.log(pers);
 
 // ----
 
-// target is prototype of the object
+// target is prototype of the object (for static property - constructor function)
 function Log(target: any, propertyName: string | Symbol) {
   console.log("property decorator");
   console.log(target, propertyName);
+}
+
+// target - prototype (for static accessor - constructor function)
+function Log2(target: any, name: string, descriptor: PropertyDescriptor) {
+  console.log("accessor decorator");
+  console.log(target);
+  console.log(name);
+  console.log(descriptor);
+}
+
+// target is as before
+function Log3(
+  target: any,
+  name: string | Symbol,
+  descriptor: PropertyDescriptor
+) {
+  console.log("method decorator");
+  console.log(target);
+  console.log(name);
+  console.log(descriptor);
+}
+
+function Log4(
+  target: any,
+  name: string | Symbol, //name of the method
+  position: number
+) {
+  console.log("parameter decorator");
+  console.log(target);
+  console.log(name);
+  console.log(position);
 }
 
 class Product {
@@ -47,6 +78,7 @@ class Product {
   title: string;
   private _price: number;
 
+  @Log2
   set price(val: number) {
     if (val > 0) {
       this._price = val;
@@ -60,8 +92,8 @@ class Product {
     this._price = p;
   }
 
-  getPriceWithTax(tax: number) {
-    // @Logger("LOGGING - PERSON")
+  @Log3
+  getPriceWithTax(@Log4 tax: number) {
     return this._price * (1 + tax);
   }
 }
