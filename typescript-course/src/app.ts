@@ -9,14 +9,26 @@ function Logger(logString: string) {
 
 function WithTemplate(template: string, hookId: string) {
   console.log("TEMPLATE FACTORY"); // runs first
-  return function (constructor: any) {
-    console.log("rendering template");
-    const hookEl = document.getElementById(hookId);
-    const p = new constructor();
-    if (hookEl) {
-      hookEl.innerHTML = template;
-      hookEl.querySelector("h1")!.textContent = p.name;
-    }
+
+  // T is supposed to be an constructor function (returns object), hence the new operator
+  return function <T extends { new (...args: any[]): { name: string } }>(
+    originalConstructor: T
+  ) {
+    // (optional) return new constructor function and replace the old one
+    // class is a syntactic sugar
+    return class extends originalConstructor {
+      constructor(...args: any[]) {
+        super(); // have to call the original constructor (save the original functionality)
+
+        // EXTRA logic that runs when the class is instantiated
+        console.log("rendering template");
+        const hookEl = document.getElementById(hookId);
+        if (hookEl) {
+          hookEl.innerHTML = template;
+          hookEl.querySelector("h1")!.textContent = this.name;
+        }
+      }
+    };
   };
 }
 
@@ -74,7 +86,7 @@ function Log4(
 }
 
 class Product {
-  @Log // executes at class definition
+  @Log // decorators execute at definition
   title: string;
   private _price: number;
 
