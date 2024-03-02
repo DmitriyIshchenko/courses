@@ -146,3 +146,88 @@ const button = document.querySelector("button")!;
 // button.addEventListener("click", p.showMessage); // undefined
 // button.addEventListener("click", p.showMessage.bind(p)); // default js way
 button.addEventListener("click", p.showMessage);
+
+// ---
+
+interface ValidatorConfig {
+  [property: string]: {
+    [validatableProp: string]: string[]; // ['required', 'positive']
+  };
+}
+
+const registeredValidators: ValidatorConfig = {};
+
+function Required(target: object, propName: string) {
+  registeredValidators[target.constructor.name] = {
+    ...registeredValidators[target.constructor.name],
+    [propName]: [
+      ...(registeredValidators[target.constructor.name]?.[propName] ?? []),
+      "required",
+    ],
+  };
+}
+
+function PositiveNumber(target: object, propName: string) {
+  registeredValidators[target.constructor.name] = {
+    ...registeredValidators[target.constructor.name],
+    [propName]: [
+      ...(registeredValidators[target.constructor.name]?.[propName] ?? []),
+      "positive",
+    ],
+  };
+}
+
+function validate(obj: any): boolean {
+  const objValidatorConfig = registeredValidators[obj.constructor.name];
+
+  if (!objValidatorConfig) return true;
+
+  let isValid = true;
+  for (const prop in objValidatorConfig) {
+    console.log(obj[prop]);
+    for (const validator of objValidatorConfig[prop]) {
+      switch (validator) {
+        case "required":
+          isValid = isValid && !!obj[prop];
+          break;
+        case "positive":
+          isValid = isValid && obj[prop] > 0;
+          break;
+      }
+    }
+  }
+
+  return isValid;
+}
+
+class Course {
+  @Required
+  title: string;
+  @PositiveNumber
+  @Required
+  price: number;
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this.price = p;
+  }
+}
+
+const courseForm = document.querySelector("form")!;
+
+courseForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const titleEl = document.getElementById("title") as HTMLInputElement;
+  const priceEl = document.getElementById("price") as HTMLInputElement;
+
+  const title = titleEl.value;
+  const price = +priceEl.value;
+
+  const createdCourse = new Course(title, price);
+  if (!validate(createdCourse)) throw new Error("invalid input");
+
+  console.log(createdCourse);
+});
+
+console.log(registeredValidators);
