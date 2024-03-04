@@ -1,3 +1,23 @@
+////////////////////////////
+// AUTOBIND DECORATOR
+////////////////////////////
+
+function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
+  const adjustedDescriptor: PropertyDescriptor = {
+    configurable: true,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+
+  return adjustedDescriptor;
+}
+
+////////////////////////////
+// FORM
+////////////////////////////
 class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
@@ -22,7 +42,7 @@ class ProjectInput {
     this.element = importedNode.firstElementChild as HTMLFormElement;
     this.element.id = "user-input";
 
-    // populate fields
+    // get form fields
     this.titleInputElement = this.element.querySelector(
       "#title"
     ) as HTMLInputElement;
@@ -43,6 +63,7 @@ class ProjectInput {
     this.hostElement.insertAdjacentElement("afterbegin", this.element);
   }
 
+  @autobind
   private submitHandler(e: Event) {
     e.preventDefault();
 
@@ -50,7 +71,11 @@ class ProjectInput {
   }
 
   private configure() {
-    this.element.addEventListener("submit", this.submitHandler.bind(this));
+    // regular js way of binding
+    // this.element.addEventListener("submit", this.submitHandler.bind(this));
+
+    // with autobind decorator the handler is already bound
+    this.element.addEventListener("submit", this.submitHandler);
   }
 }
 
