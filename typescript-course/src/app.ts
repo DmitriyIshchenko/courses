@@ -1,4 +1,54 @@
 ////////////////////////////
+// VALIDATION
+////////////////////////////
+
+interface Validatable {
+  value: string | number;
+  required?: boolean;
+  minLength?: number;
+  maxLength?: number;
+  min?: number;
+  max?: number;
+}
+
+function validate(validatableInput: Validatable): boolean {
+  let isValid = true;
+
+  if (validatableInput.required) {
+    // convert to string to use trim on numbers (ts error workaround)
+    isValid = isValid && validatableInput.value.toString().trim().length !== 0;
+  }
+
+  // don't care about numbers in this case
+  if (
+    validatableInput.minLength &&
+    typeof validatableInput.value === "string"
+  ) {
+    isValid =
+      isValid && validatableInput.value.length > validatableInput.minLength;
+  }
+
+  if (
+    validatableInput.maxLength &&
+    typeof validatableInput.value === "string"
+  ) {
+    isValid =
+      isValid && validatableInput.value.length < validatableInput.maxLength;
+  }
+
+  // only for numbers
+  if (validatableInput.min && typeof validatableInput.value === "number") {
+    isValid = isValid && validatableInput.value > validatableInput.min;
+  }
+
+  if (validatableInput.max && typeof validatableInput.value === "number") {
+    isValid = isValid && validatableInput.value < validatableInput.max;
+  }
+
+  return isValid;
+}
+
+////////////////////////////
 // AUTOBIND DECORATOR
 ////////////////////////////
 
@@ -69,13 +119,28 @@ class ProjectInput {
     const enteredDescription = this.descriptionInputElement.value;
     const enteredPeople = this.peopleInputElement.value;
 
-    // validate input
+    // validate inputs
 
-    //  simple validation
+    const titleValidatable: Validatable = {
+      value: enteredTitle,
+      required: true,
+    };
+    const descriptionValidatable: Validatable = {
+      value: enteredDescription,
+      required: true,
+      minLength: 5,
+    };
+    const peopleValidatable: Validatable = {
+      value: enteredPeople,
+      required: true,
+      min: 1,
+      max: 5,
+    };
+
     if (
-      enteredTitle.trim().length === 0 ||
-      enteredDescription.trim().length === 0 ||
-      enteredPeople.trim().length === 0
+      !validate(titleValidatable) ||
+      !validate(descriptionValidatable) ||
+      !validate(peopleValidatable)
     ) {
       // TODO: implement error handling
       alert("Invalid input");
