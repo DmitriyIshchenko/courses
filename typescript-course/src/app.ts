@@ -1,11 +1,29 @@
 ////////////////////////////
+// PROJECT TYPE
+////////////////////////////
+enum ProjectStatus {
+  Active,
+  Finished,
+}
+
+class Project {
+  constructor(
+    public id: string,
+    public title: string,
+    public description: string,
+    public people: number,
+    public status: ProjectStatus
+  ) {}
+}
+
+////////////////////////////
 // PROJECT STATE MANAGEMENT
 ////////////////////////////
 class ProjectState {
   // subscriber pattern
   private listeners: any[] = [];
 
-  private projects: any[] = [];
+  private projects: Project[] = [];
   private constructor() {}
 
   // ensure that there is only one instance
@@ -25,12 +43,13 @@ class ProjectState {
   }
 
   addProject(title: string, description: string, numOfPeople: number) {
-    const newProject = {
-      id: Math.random().toString(),
+    const newProject = new Project(
+      Math.random().toString(),
       title,
       description,
-      people: numOfPeople,
-    };
+      numOfPeople,
+      ProjectStatus.Active
+    );
 
     this.projects.push(newProject);
     // trigger all listeners
@@ -117,7 +136,7 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
-  assignedProjects: any[];
+  assignedProjects: Project[];
 
   constructor(private type: "active" | "finished") {
     // get template
@@ -141,8 +160,6 @@ class ProjectList {
       // override with the state data
       this.assignedProjects = projects;
       this.renderProjects();
-
-      console.log("fksldf");
     });
 
     this.attach();
