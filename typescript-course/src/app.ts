@@ -1,4 +1,49 @@
 ////////////////////////////
+// PROJECT STATE MANAGEMENT
+////////////////////////////
+class ProjectState {
+  // subscriber pattern
+  private listeners: any[] = [];
+
+  private projects: any[] = [];
+  private constructor() {}
+
+  // ensure that there is only one instance
+  private static instance: ProjectState;
+  static getInstance() {
+    if (this.instance) {
+      return this.instance;
+    }
+
+    this.instance = new ProjectState();
+    return this.instance;
+  }
+
+  // subscriber pattern
+  addListener(listenerFn: Function) {
+    this.listeners.push(listenerFn);
+  }
+
+  addProject(title: string, description: string, numOfPeople: number) {
+    const newProject = {
+      id: Math.random().toString(),
+      title,
+      description,
+      people: numOfPeople,
+    };
+
+    this.projects.push(newProject);
+    // trigger all listeners
+    for (const listenerFn of this.listeners) {
+      listenerFn(this.projects.slice()); // pass copy to prevent editing
+    }
+  }
+}
+
+// global instance (singleton)
+const projectState = ProjectState.getInstance();
+
+////////////////////////////
 // VALIDATION
 ////////////////////////////
 
@@ -72,6 +117,7 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
+  assignedProjects: any[];
 
   constructor(private type: "active" | "finished") {
     // get template
@@ -80,6 +126,7 @@ class ProjectList {
     )! as HTMLTemplateElement;
     // get app div
     this.hostElement = document.getElementById("app")! as HTMLDivElement;
+    this.assignedProjects = [];
 
     // get template content (form itself)
     const importedNode = document.importNode(
@@ -89,8 +136,29 @@ class ProjectList {
     this.element = importedNode.firstElementChild as HTMLElement;
     this.element.id = `${this.type}-projects`;
 
+    // subscribe
+    projectState.addListener((projects: any[]) => {
+      // override with the state data
+      this.assignedProjects = projects;
+      this.renderProjects();
+
+      console.log("fksldf");
+    });
+
     this.attach();
     this.renderContent();
+  }
+
+  private renderProjects() {
+    const listEl = document.getElementById(
+      `${this.type}-projects-list`
+    )! as HTMLUListElement;
+
+    for (const projectItem of this.assignedProjects) {
+      const listItem = document.createElement("li");
+      listItem.textContent = projectItem.title;
+      listEl.appendChild(listItem);
+    }
   }
 
   private renderContent() {
@@ -204,7 +272,8 @@ class ProjectInput {
     if (Array.isArray(userInput)) {
       const [title, description, people] = userInput;
 
-      console.log(title, description, people);
+      projectState.addProject(title, description, people);
+
       this.clearInputs();
     }
   }
