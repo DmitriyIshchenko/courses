@@ -19,9 +19,12 @@ class Project {
 ////////////////////////////
 // PROJECT STATE MANAGEMENT
 ////////////////////////////
+
+type Listener = (items: Project[]) => void;
+
 class ProjectState {
   // subscriber pattern
-  private listeners: any[] = [];
+  private listeners: Listener[] = [];
 
   private projects: Project[] = [];
   private constructor() {}
@@ -38,7 +41,7 @@ class ProjectState {
   }
 
   // subscriber pattern
-  addListener(listenerFn: Function) {
+  addListener(listenerFn: Listener) {
     this.listeners.push(listenerFn);
   }
 
@@ -156,7 +159,7 @@ class ProjectList {
     this.element.id = `${this.type}-projects`;
 
     // subscribe
-    projectState.addListener((projects: any[]) => {
+    projectState.addListener((projects: Project[]) => {
       // override with the state data
       this.assignedProjects = projects;
       this.renderProjects();
