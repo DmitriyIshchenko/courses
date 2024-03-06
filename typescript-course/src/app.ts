@@ -20,14 +20,23 @@ class Project {
 // PROJECT STATE MANAGEMENT
 ////////////////////////////
 
-type Listener = (items: Project[]) => void;
+// generic type (we don't know listener returns)
+type Listener<T> = (items: T[]) => void;
 
-class ProjectState {
+class State<T> {
   // subscriber pattern
-  private listeners: Listener[] = [];
+  protected listeners: Listener<T>[] = [];
 
+  addListener(listenerFn: Listener<T>) {
+    this.listeners.push(listenerFn);
+  }
+}
+
+class ProjectState extends State<Project> {
   private projects: Project[] = [];
-  private constructor() {}
+  private constructor() {
+    super();
+  }
 
   // ensure that there is only one instance
   private static instance: ProjectState;
@@ -38,11 +47,6 @@ class ProjectState {
 
     this.instance = new ProjectState();
     return this.instance;
-  }
-
-  // subscriber pattern
-  addListener(listenerFn: Listener) {
-    this.listeners.push(listenerFn);
   }
 
   addProject(title: string, description: string, numOfPeople: number) {
