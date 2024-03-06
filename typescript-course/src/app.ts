@@ -182,6 +182,10 @@ class ProjectList {
       `${this.type}-projects-list`
     )! as HTMLUListElement;
 
+    // clear list
+    listEl.innerHTML = "";
+
+    // render updated data
     for (const projectItem of this.assignedProjects) {
       const listItem = document.createElement("li");
       listItem.textContent = projectItem.title;
