@@ -133,31 +133,76 @@ function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
 }
 
 //////////////////////////////////
-// PROJECT LIST
+// COMPONENT BASE
 //////////////////////////////////
-class ProjectList {
-  templateElement: HTMLTemplateElement;
-  hostElement: HTMLDivElement;
-  element: HTMLElement;
-  assignedProjects: Project[];
 
-  constructor(private type: "active" | "finished") {
-    // get template
+// generic class
+// abstract class (never instantiate it, only inherit)
+abstract class Component<T extends HTMLElement, U extends HTMLElement> {
+  templateElement: HTMLTemplateElement;
+  hostElement: T;
+  element: U;
+
+  constructor(
+    templateId: string,
+    hostElementId: string,
+    insertAtStart: boolean,
+    newElementId?: string
+  ) {
+    // select elements
     this.templateElement = document.getElementById(
-      "project-list"
+      templateId
     )! as HTMLTemplateElement;
-    // get app div
-    this.hostElement = document.getElementById("app")! as HTMLDivElement;
-    this.assignedProjects = [];
+    this.hostElement = document.getElementById(hostElementId)! as T;
 
     // get template content (form itself)
     const importedNode = document.importNode(
       this.templateElement.content,
       true
     );
-    this.element = importedNode.firstElementChild as HTMLElement;
-    this.element.id = `${this.type}-projects`;
+    this.element = importedNode.firstElementChild as U;
 
+    if (newElementId) this.element.id = newElementId;
+
+    this.attach(insertAtStart);
+  }
+
+  private attach(insertAtStart: boolean) {
+    this.hostElement.insertAdjacentElement(
+      insertAtStart ? "afterbegin" : "beforeend",
+      this.element
+    );
+  }
+
+  // abstract methods (force any child class to have these methods)
+  abstract configure?(): void;
+  abstract renderContent(): void;
+}
+
+//////////////////////////////////
+// PROJECT LIST
+//////////////////////////////////
+class ProjectList extends Component<HTMLDivElement, HTMLElement> {
+  assignedProjects: Project[];
+
+  constructor(private type: "active" | "finished") {
+    super("project-list", "app", false, `${type}-projects`);
+    this.assignedProjects = [];
+
+    this.configure();
+    this.renderContent();
+  }
+
+  // populate nested tags
+  renderContent() {
+    const listId = `${this.type}-projects-list`;
+    this.element.querySelector("ul")!.id = listId;
+
+    this.element.querySelector("h2")!.textContent =
+      this.type.toUpperCase() + " PROJECTS";
+  }
+
+  configure() {
     // subscribe
     projectState.addListener((projects: Project[]) => {
       // filter project by status
@@ -172,9 +217,6 @@ class ProjectList {
       this.assignedProjects = relevantProjects;
       this.renderProjects();
     });
-
-    this.attach();
-    this.renderContent();
   }
 
   private renderProjects() {
@@ -192,46 +234,18 @@ class ProjectList {
       listEl.appendChild(listItem);
     }
   }
-
-  private renderContent() {
-    const listId = `${this.type}-projects-list`;
-    this.element.querySelector("ul")!.id = listId;
-
-    this.element.querySelector("h2")!.textContent =
-      this.type.toUpperCase() + " PROJECTS";
-  }
-
-  private attach() {
-    this.hostElement.insertAdjacentElement("beforeend", this.element);
-  }
 }
 
 ////////////////////////////
 // FORM
 ////////////////////////////
-class ProjectInput {
-  templateElement: HTMLTemplateElement;
-  hostElement: HTMLDivElement;
-  element: HTMLFormElement;
+class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
   titleInputElement: HTMLInputElement;
   descriptionInputElement: HTMLInputElement;
   peopleInputElement: HTMLInputElement;
 
   constructor() {
-    // get template
-    this.templateElement = document.getElementById(
-      "project-input"
-    )! as HTMLTemplateElement;
-    // get app div
-    this.hostElement = document.getElementById("app")! as HTMLDivElement;
-
-    // get template content (form itself)
-    const importedNode = document.importNode(
-      this.templateElement.content,
-      true
-    );
-    this.element = importedNode.firstElementChild as HTMLFormElement;
-    this.element.id = "user-input";
+    super("project-input", "app", true, "user-input");
 
     // get form fields
     this.titleInputElement = this.element.querySelector(
@@ -245,14 +259,18 @@ class ProjectInput {
     ) as HTMLInputElement;
 
     this.configure();
-
-    // render form
-    this.attach();
   }
 
-  private attach() {
-    this.hostElement.insertAdjacentElement("afterbegin", this.element);
+  configure() {
+    // regular js way of binding
+    // this.element.addEventListener("submit", this.submitHandler.bind(this));
+
+    // with autobind decorator the handler is already bound
+    this.element.addEventListener("submit", this.submitHandler);
   }
+
+  // nested tags are already populated in the html template
+  renderContent() {}
 
   // use tuple
   private getUserInput(): [string, string, number] | void {
@@ -308,14 +326,6 @@ class ProjectInput {
 
       this.clearInputs();
     }
-  }
-
-  private configure() {
-    // regular js way of binding
-    // this.element.addEventListener("submit", this.submitHandler.bind(this));
-
-    // with autobind decorator the handler is already bound
-    this.element.addEventListener("submit", this.submitHandler);
   }
 }
 
