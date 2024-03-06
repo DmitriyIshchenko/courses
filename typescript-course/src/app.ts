@@ -160,8 +160,16 @@ class ProjectList {
 
     // subscribe
     projectState.addListener((projects: Project[]) => {
-      // override with the state data
-      this.assignedProjects = projects;
+      // filter project by status
+      const relevantProjects = projects.filter((proj) => {
+        if (this.type == "active") {
+          return proj.status === ProjectStatus.Active;
+        }
+        return proj.status === ProjectStatus.Finished;
+      });
+
+      // override local state with updated data
+      this.assignedProjects = relevantProjects;
       this.renderProjects();
     });
 
