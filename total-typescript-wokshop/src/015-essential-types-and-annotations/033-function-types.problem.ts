@@ -3,7 +3,9 @@ type User = {
   name: string;
 };
 
-const modifyUser = (users: User[], id: string, makeChange) => {
+type makeChangeFunc = (user: User) => User;
+
+const modifyUser = (users: User[], id: string, makeChange: makeChangeFunc) => {
   return users.map((u) => {
     if (u.id === id) {
       return makeChange(u);
@@ -27,5 +29,5 @@ modifyUser(
   // @ts-expect-error
   (user) => {
     return { ...user, name: 123 };
-  },
+  }
 );
