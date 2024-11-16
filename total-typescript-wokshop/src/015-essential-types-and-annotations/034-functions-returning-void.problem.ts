@@ -1,4 +1,4 @@
-const addClickEventListener = (listener) => {
+const addClickEventListener = (listener: () => void) => {
   document.addEventListener("click", listener);
 };
 
@@ -8,5 +8,5 @@ addClickEventListener(() => {
 
 addClickEventListener(
   // @ts-expect-error
-  "abc",
+  "abc"
 );
