@@ -26,4 +26,4 @@ type Alphabet =
   | "y"
   | "z";
 
-type TooBig = `${Alphabet}${Alphabet}${Alphabet}${Alphabet}`;
+type TooBig = string;
