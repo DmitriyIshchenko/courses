@@ -1,14 +1,14 @@
 // TypeScript sometimes warns you about
 // things which will fail at runtime
 
-const a = null;
+const a = 1;
 
 a.toString();
 
 // But not everything it warns you
 // about will fail at runtime
 
-const obj = {};
+const obj: { foo?: string } = {};
 
 obj.foo = "hello";
 
@@ -20,7 +20,7 @@ type MyUser = {
 };
 
 const user: MyUser = {
-  nme: "Katherine",
+  name: "Katherine",
 };
 
 // But sometimes that's not always possible
@@ -28,5 +28,5 @@ const user: MyUser = {
 type FunctionThatReturnsAString = () => string;
 
 const fn: FunctionThatReturnsAString = () => {
-  return 123;
+  return "sdf";
 };
