@@ -1,6 +1,6 @@
 import { Equal, Expect } from "@total-typescript/helpers";
 
-const throwError = (message: string): undefined => {
+const throwError = (message: string): never => {
   throw new Error(message);
 };
 
