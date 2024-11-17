@@ -1,4 +1,8 @@
-const shoppingCart = {
+type ShoppingCart = {
+  items: string[];
+};
+
+const shoppingCart: ShoppingCart = {
   items: [],
 };
 
