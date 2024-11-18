@@ -7,7 +7,7 @@ type User = {
   imageId: string;
 };
 
-type Organisation = {
+type Organization = {
   id: string;
   name: string;
   address: string;
@@ -21,7 +21,9 @@ type Product = {
   imageId: string;
 };
 
-const getAvatarImage = (entity: unknown) => {
+type Entity = User | Organization | Product;
+
+const getAvatarImage = (entity: Entity) => {
   {
     // Should not be able to access properties that are
     // not common to both types
