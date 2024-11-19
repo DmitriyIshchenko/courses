@@ -1,4 +1,4 @@
-type Coordinate = [number, number];
+type Coordinate = readonly [number, number];
 const myHouse: Coordinate = [0, 0];
 
 const dangerousFunction = (arrayOfNumbers: number[]) => {
@@ -8,5 +8,5 @@ const dangerousFunction = (arrayOfNumbers: number[]) => {
 
 dangerousFunction(
   // @ts-expect-error
-  myHouse,
+  myHouse
 );
