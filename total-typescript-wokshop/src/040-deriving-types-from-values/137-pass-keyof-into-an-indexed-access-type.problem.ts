@@ -11,7 +11,19 @@ export const programModeEnumMap = {
 
 type ProgramModeMap = typeof programModeEnumMap;
 
-type AllPrograms = unknown;
+type AllPrograms = ProgramModeMap[keyof ProgramModeMap];
+
+function fn(mode: AllPrograms) {
+  if (mode === programModeEnumMap.GROUP) {
+  }
+
+  if (mode === "announcement") {
+  }
+
+  // @ts-expect-error
+  if (mode === "fsdfjk") {
+  }
+}
 
 type test = Expect<
   Equal<
