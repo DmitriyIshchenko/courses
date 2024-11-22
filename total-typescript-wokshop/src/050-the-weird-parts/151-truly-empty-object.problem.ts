@@ -1,4 +1,4 @@
-const acceptOnlyEmptyObject = (input: {}) => {};
+const acceptOnlyEmptyObject = (input: Record<PropertyKey, never>) => {};
 
 acceptOnlyEmptyObject({});
 
@@ -8,41 +8,41 @@ acceptOnlyEmptyObject({
 });
 acceptOnlyEmptyObject(
   // @ts-expect-error
-  "hello",
+  "hello"
 );
 acceptOnlyEmptyObject(
   // @ts-expect-error
-  42,
+  42
 );
 acceptOnlyEmptyObject(
   // @ts-expect-error
-  true,
+  true
 );
 acceptOnlyEmptyObject(
   // @ts-expect-error
-  Symbol("foo"),
+  Symbol("foo")
 );
 acceptOnlyEmptyObject(
   // @ts-expect-error
-  [],
+  []
 );
 acceptOnlyEmptyObject(
   // @ts-expect-error
-  () => {},
+  () => {}
 );
 acceptOnlyEmptyObject(
   // @ts-expect-error
-  /foo/,
+  /foo/
 );
 acceptOnlyEmptyObject(
   // @ts-expect-error
-  new Error("foo"),
+  new Error("foo")
 );
 acceptOnlyEmptyObject(
   // @ts-expect-error
-  null,
+  null
 );
 acceptOnlyEmptyObject(
   // @ts-expect-error
-  undefined,
+  undefined
 );
