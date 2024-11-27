@@ -1,4 +1,4 @@
-type Result<TResult, TError = Error> =
+type Result<TResult, TError extends { message: string } = Error> =
   | {
       success: true;
       data: TResult;
