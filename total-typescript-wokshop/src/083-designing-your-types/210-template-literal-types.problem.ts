@@ -1,4 +1,4 @@
-type AbsoluteRoute = string;
+type AbsoluteRoute = `/${string}`;
 
 const goToRoute = (route: AbsoluteRoute) => {
   // ...
@@ -10,5 +10,5 @@ goToRoute("/contact");
 
 goToRoute(
   // @ts-expect-error
-  "somewhere",
+  "somewhere"
 );
