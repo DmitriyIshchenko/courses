@@ -2,8 +2,8 @@ import { Equal, Expect } from "@total-typescript/helpers";
 
 // CODE
 
-const createStringMap = () => {
-  return new Map();
+const createStringMap = <T>() => {
+  return new Map<string, T>();
 };
 
 // TESTS
@@ -14,7 +14,7 @@ numberMap.set("foo", 123);
 numberMap.set(
   "bar",
   // @ts-expect-error
-  true,
+  true
 );
 
 const objMap = createStringMap<{ a: number }>();
@@ -24,7 +24,7 @@ objMap.set("foo", { a: 123 });
 objMap.set(
   "bar",
   // @ts-expect-error
-  { b: 123 },
+  { b: 123 }
 );
 
 const unknownMap = createStringMap();
